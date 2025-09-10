@@ -106,12 +106,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       module: MODULES.SUBADMINS
     },
 
-    // {
-    //   icon: Package,
-    //   label: t('O_PRODUCTS'),
-    //   path: 'products',
-    //   module: MODULES.PRODUCTS
-    // },
     {
       icon: Users2,
       label: t('O_CIRCLES'),
@@ -125,12 +119,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       module: MODULES.EVENTS
     },
 
-    // {
-    //   icon: Gift,
-    //   label: t('O_VIRTUAL_GIFTS'),
-    //   path: 'virtual-gifts',
-    //   module: MODULES.VIRTUAL_GIFTS
-    // },
 
     {
       icon: Target,
@@ -138,26 +126,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       path: 'intentions',
       module: MODULES.INTENTIONS
     },
-    // {
-    //   icon: CreditCard,
-    //   label: t('O_PAYMENTS'),
-    //   path: 'payments',
-    //   module: MODULES.PAYMENTS
-    // },
-    // {
-    //   icon: ShoppingCart,
-    //   label: t('O_ORDERS'),
-    //   path: 'orders',
-    //   module: MODULES.ORDERS
-    // },
-    // {
-    //   icon: BarChart3,
-    //   label: t('O_ANALYTICS'),
-    //   path: 'analytics',
-    //   module: MODULES.ANALYTICS
-    // },
-
-
+    
     {
       icon: BookHeart,
       label: t('SECRET_CRUSH'),

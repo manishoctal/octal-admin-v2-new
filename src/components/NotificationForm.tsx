@@ -114,9 +114,11 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
         }
     };
 
-    const handleSendToChange = (value: 'all' | 'specific') => {
 
-        console.log('value', value)
+
+    const handleSendToChange = (value: 'all' | 'specific') => {
+        console.log('value', formData)
+
         setFormData(prev => ({
             ...prev,
             sendTo: value,
@@ -213,17 +215,36 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                 <Label className="text-sm font-medium">Send To<span className='text-red-500'>*</span></Label>
 
                 <div className="grid grid-cols-1 gap-4">
+
                     <div className={`p-4 border rounded-lg cursor-pointer transition-colors ${formData.sendTo === 'all'
                         ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50'
                         }`}
+                        onClick={() => handleSendToChange('all')}
                     >
                         <div className="flex items-center space-x-3">
-                            <Checkbox
-                                checked={formData.sendTo === 'all'}
-                                onCheckedChange={() => handleSendToChange('all')}
+                            <input type='checkbox'
+                                className="
+                                w-5 h-5 rounded appearance-none cursor-pointer
+                                border relative
+                                bg-white border-gray-400
+                                dark:bg-gray-900 dark:border-gray-500
+                            
+                                checked:bg-black checked:border-black
+                                dark:checked:bg-white dark:checked:border-white
+                            
+                                after:hidden
+                                after:content-['✓']
+                                after:absolute after:inset-0
+                                after:flex after:items-center after:justify-center
+                                after:text-sm after:font-bold
+                            after:left-1
+                                checked:[&:after]:block
+                                after:text-white
+                                dark:checked:after:text-black
+                              "
+                                checked={formData?.sendTo == 'all'}
                             />
-
                             <div className="flex-1">
                                 <div className="flex items-center gap-2">
                                     <Users className="w-4 h-4" />
@@ -240,12 +261,29 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                     <div className={`p-4 border rounded-lg cursor-pointer transition-colors ${formData.sendTo === 'specific'
                         ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50'
-                        }`}>
+                        }`} onClick={() => handleSendToChange('specific')}>
                         <div className="space-y-3">
                             <div className="flex items-center space-x-3">
-                                <Checkbox
-                                    checked={formData.sendTo === 'specific'}
-                                    onCheckedChange={() => handleSendToChange('specific')}
+                                <input type='checkbox'
+                                    className="
+                                    w-5 h-5 rounded appearance-none cursor-pointer
+                                    border relative
+                                    bg-white border-gray-400
+                                    dark:bg-gray-900 dark:border-gray-500
+                                    checked:bg-black checked:border-black
+                                    dark:checked:bg-white dark:checked:border-white
+                                    after:hidden
+                                    after:content-['✓']
+                                    after:absolute after:inset-0
+                                    after:flex after:items-center after:justify-center
+                                    after:text-sm after:font-bold
+                                    after:left-1
+                                    checked:[&:after]:block
+                                    after:text-white
+                                    dark:checked:after:text-black
+                                  "
+                                    checked={formData?.sendTo == 'specific'}
+
                                 />
                                 <div className="flex-1">
                                     <div className="flex items-center gap-2">
@@ -264,7 +302,7 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                                         placeholder="Search users by name or email..."
                                         value={selectedUserSearch}
                                         onChange={(e) => setSelectedUserSearch(e?.target?.value)}
-                                        className='bg-white'
+                                        className='bg-white '
                                     />
 
                                     {getSelectedUsers()?.length > 0 && (
@@ -272,7 +310,7 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                                             <p className="text-sm font-medium mb-2">Selected Users ({getSelectedUsers()?.length})</p>
                                             <div className="flex flex-wrap gap-2 ">
                                                 {getSelectedUsers()?.map(user => (
-                                                    <Badge key={user?._id} variant="secondary" className="gap-1 bg-white cursor-default">
+                                                    <Badge key={user?._id} variant="secondary" className="gap-1 bg-white dark:bg-black cursor-default">
                                                         {helpers.capitalizeFirstWord(user?.name)}
                                                         <button
                                                             type="button"
@@ -287,7 +325,7 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                                         </div>
                                     )}
 
-                                    <div className="max-h-40 overflow-y-auto border border-white rounded-lg bg-white">
+                                    <div className="max-h-40 overflow-y-auto border border-white rounded-lg bg-white dark:bg-black">
                                         {getFilteredUsers()?.map(user => (
                                             <div
                                                 key={user?._id}
@@ -350,7 +388,7 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                                     { indent: '-1' },
                                     { indent: '+1' },
                                 ],
-                                ['link', 'image', 'video'],
+                                ['link'],
                                 ['clean'],
                             ],
                         }}

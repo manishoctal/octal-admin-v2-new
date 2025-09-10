@@ -24,7 +24,8 @@ import {
   Calendar,
   AlertTriangle,
   CheckCircle,
-  CalendarCog
+  CalendarCog,
+  Type
 } from 'lucide-react';
 import { useSettings, SettingsData } from './SettingsContext';
 import apiPath from '@/utils/apiPath';
@@ -49,9 +50,15 @@ export function Settings() {
     defaultValues: {},
   });
 
+
   const [hasChanges, setHasChanges] = useState(isDirty || false);
   const [tempSettings, setTempSettings] = useState<SettingsData>(settings);
   const [theme, setTheme] = useState<SettingsData>(settings?.theme);
+
+  const [fontFamily, setFontFamily] = useState<SettingsData>(settings?.fontFamily);
+  const [fontSize, setFontSize] = useState<SettingsData>(settings?.fontSize);
+  
+  
   const { t } = useTranslation()
   const formValidation = FormValidation()
   type FormValues = {
@@ -75,6 +82,8 @@ export function Settings() {
   React.useEffect(() => {
     setTempSettings(settings);
     setTheme(settings?.theme)
+    setFontSize(settings?.fontSize)
+    setFontFamily(settings?.fontFamily)
   }, [settings]);
 
 
@@ -86,14 +95,15 @@ export function Settings() {
         const localStorageData = localStorage.getItem('adminPanelSettings')
         if (!localStorageData) {
           const data = { ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance }
+
           localStorage.setItem('adminPanelSettings', JSON.stringify(data))
           setTempSettings((prev) => ({ ...prev, ...data }))
         } else {
           let parsedyData = JSON.parse(localStorageData)
           if (parsedyData?.dateFormat !== resp?.data?.results?.dateFormat) {
-            console.log('aaaa', parsedyData, settings)
 
             const data = { ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance }
+
             localStorage.setItem('adminPanelSettings', JSON.stringify(data))
             setTempSettings((prev) => ({ ...prev, ...data }))
 
@@ -145,8 +155,9 @@ export function Settings() {
     try {
       const resp = await apiPut(apiPath.getSetting, { ...e, maintenance: tempSettings?.maintenanceMode })
       if (resp?.data?.success) {
-        updateSettings({ ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance, enableAnimations: tempSettings?.enableAnimations, compactMode: tempSettings?.compactMode, theme: theme || settings?.theme });
+        updateSettings({ ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance, enableAnimations: tempSettings?.enableAnimations, fontFamily:fontFamily||tempSettings?.fontFamily,fontSize:fontSize||tempSettings?.fontSize, compactMode: tempSettings?.compactMode, theme: theme || settings?.theme });
         SuccessToastMessage({ message: resp?.data?.message })
+
         setHasChanges(false)
       }
     } catch (err) {
@@ -167,7 +178,7 @@ export function Settings() {
             <p className="text-muted-foreground">Manage your application settings and configuration</p>
           </div>
           <div className="sm:flex items-center gap-2 ">
-            <Button type='submit' disabled={!isDirty && !hasChanges && (!theme || theme == settings?.theme)} className="w-full sm:w-auto mt-1 sm:mt-0">
+            <Button type='submit' disabled={!isDirty && !hasChanges && (!theme || theme == settings?.theme)&&(!fontFamily || fontFamily == settings?.fontFamily)&&(!fontSize || fontSize == settings?.fontSize)} className="w-full sm:w-auto mt-1 sm:mt-0">
               <Save className="w-4 h-4 mr-2" />
               {isSaving ? 'Saving...' : 'Save Settings'}
             </Button>
@@ -374,6 +385,48 @@ export function Settings() {
                 </div>
 
 
+                <div className="space-y-2">
+                  <Label htmlFor="fontSize" >
+                    Font Size
+                  </Label>
+                  <Select
+                    value={fontSize||settings?.fontSize}
+                    onValueChange={(value: 'small' | 'medium' | 'large' | 'extra-large') => setFontSize(value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="small">Small (12px)</SelectItem>
+                      <SelectItem value="medium">Medium (14px)</SelectItem>
+                      <SelectItem value="large">Large (16px)</SelectItem>
+                      <SelectItem value="extra-large">Extra Large (18px)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="fontFamily" >
+                    Font Family
+                  </Label>
+                  <Select
+                    value={fontFamily||settings?.fontFamily}
+                    onValueChange={(value: 'system' | 'sans-serif' | 'serif' | 'monospace') => setFontFamily(value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="system">System Default</SelectItem>
+                      <SelectItem value="sans-serif">Sans Serif</SelectItem>
+                      <SelectItem value="serif">Serif</SelectItem>
+                      <SelectItem value="monospace">Monospace</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+
+
               </div>
 
             </CardContent>
@@ -421,7 +474,7 @@ export function Settings() {
               <Separator />
 
 
-              <div className="grid grid-cols-1  sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1  sm:grid-cols-1 gap-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="enableAnimations">Show Animations</Label>
@@ -430,15 +483,15 @@ export function Settings() {
                     </p>
                   </div>
                   <div>
-                  <Switch
-                    id="enableAnimations"
-                    checked={tempSettings.enableAnimations}
-                    onCheckedChange={(checked) => handleSettingChange('enableAnimations', checked)}
-                  />
+                    <Switch
+                      id="enableAnimations"
+                      checked={tempSettings.enableAnimations}
+                      onCheckedChange={(checked) => handleSettingChange('enableAnimations', checked)}
+                    />
                   </div>
                 </div>
 
-                {/* <Separator /> */}
+                <Separator />
 
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
@@ -446,10 +499,10 @@ export function Settings() {
                     <p className="text-sm text-muted-foreground">Use compact layout for tables and lists</p>
                   </div>
                   <div>
-                  <Switch
-                    checked={tempSettings.compactMode}
-                    onCheckedChange={(checked) => handleSettingChange('compactMode', checked)}
-                  />
+                    <Switch
+                      checked={tempSettings.compactMode}
+                      onCheckedChange={(checked) => handleSettingChange('compactMode', checked)}
+                    />
                   </div>
                 </div>
               </div>
@@ -605,6 +658,6 @@ export function Settings() {
         </Card>
 
       </div>
-    </form>
+    </form >
   );
 }

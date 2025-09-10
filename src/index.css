@@ -6,6 +6,7 @@
 
 :root {
   --font-size: 14px;
+  --font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -225,6 +226,7 @@
 
 html {
   font-size: var(--font-size);
+  font-family: var(--font-family);
 }
 
 .dark .react-tel-input .flag-dropdown {
@@ -262,4 +264,13 @@ html {
 }
 
 
+.ql-tooltip {
+  left: 0 !important;
+  top: 0px !important;
+}
 
+
+.dark .ql-editor.ql-blank::before {
+  color: #ffffff; /* White placeholder */
+  opacity: 0.6;
+}

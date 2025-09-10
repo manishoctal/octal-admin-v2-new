@@ -93,26 +93,42 @@ export function SubadminForm({ mode }: SubadminFormProps) {
 
   const handlePermissionChange = (module: string, action: string, checked: boolean) => {
     const permissionKey = `${module}:${action}`;
+    const viewPermission = `${module}:view`;
+    const dependentActions = ["Add", "edit", "delete"];
+  
     setFormData(prev => {
-      const exists = prev?.permissions.includes(permissionKey);
+      let updatedPermissions = [...prev.permissions];
+      const exists = updatedPermissions?.includes(permissionKey);
+  
+      if (checked) {
+        if (!exists) {
+          updatedPermissions.push(permissionKey);
+        }
+  
+        if (dependentActions.includes(action) && !updatedPermissions?.includes(viewPermission)) {
+          updatedPermissions.push(viewPermission);
+        }
+      } else {
+        updatedPermissions = updatedPermissions.filter(p => p !== permissionKey);
+        if (action === "view") {
+          updatedPermissions = updatedPermissions.filter(
+            p => !dependentActions.some(dep => p === `${module}:${dep}`)
+          );
+        }
+      }
+  
       return {
         ...prev,
-        permissions: checked
-          ? exists
-            ? prev.permissions
-            : [...prev.permissions, permissionKey]
-          : prev.permissions.filter(p => p !== permissionKey)
+        permissions: updatedPermissions
       };
     });
+  };
+  
 
-
-  }
 
   const hasModulePermission = (module: string, action: string): boolean => {
     return formData?.permissions?.includes(`${module}:${action}`);
   };
-
-
 
 
   const handleAddSubadmin = async (e: React.FormEvent) => {
@@ -318,8 +334,8 @@ export function SubadminForm({ mode }: SubadminFormProps) {
                   <tr className="bg-gray-100  dark:bg-gray-800">
                     <th className="px-4 py-2 text-left">Module</th>
                     {Object.values(ACTIONS).map((action) => (
-                      <th key={action} className="px-4 py-2 text-center">
-                        {ACTION_LABELS[action]}
+                      <th key={action} className="px-4 py-2 text-center w-[250px]">
+                        {ACTION_LABELS[action]=='Edit'?ACTION_LABELS[action]+' / Update Status':ACTION_LABELS[action]}
                       </th>
                     ))}
                     <th className="px-4 py-2 text-center">All</th>
