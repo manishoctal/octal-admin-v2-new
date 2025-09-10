@@ -17,6 +17,7 @@ export interface User {
   createdBy?: string;
 }
 
+
 export type CreateSubadminData = {
   firstName: string;
   lastName: string;
