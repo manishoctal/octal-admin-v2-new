@@ -106,33 +106,33 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       module: MODULES.SUBADMINS
     },
 
-    {
-      icon: Users2,
-      label: t('O_CIRCLES'),
-      path: 'circles',
-      module: MODULES.CIRCLES
-    },
-    {
-      icon: Calendar,
-      label: t('O_EVENTS'),
-      path: 'events',
-      module: MODULES.EVENTS
-    },
+    // {
+    //   icon: Users2,
+    //   label: t('O_CIRCLES'),
+    //   path: 'circles',
+    //   module: MODULES.CIRCLES
+    // },
+    // {
+    //   icon: Calendar,
+    //   label: t('O_EVENTS'),
+    //   path: 'events',
+    //   module: MODULES.EVENTS
+    // },
 
 
-    {
-      icon: Target,
-      label: t('O_INTENT'),
-      path: 'intentions',
-      module: MODULES.INTENTIONS
-    },
+    // {
+    //   icon: Target,
+    //   label: t('O_INTENT'),
+    //   path: 'intentions',
+    //   module: MODULES.INTENTIONS
+    // },
     
-    {
-      icon: BookHeart,
-      label: t('SECRET_CRUSH'),
-      path: 'secret-crush',
-      module: MODULES.SECRET_CRUSH
-    },
+    // {
+    //   icon: BookHeart,
+    //   label: t('SECRET_CRUSH'),
+    //   path: 'secret-crush',
+    //   module: MODULES.SECRET_CRUSH
+    // },
     {
       icon: FlagOff,
       label: t('REPORTS'),

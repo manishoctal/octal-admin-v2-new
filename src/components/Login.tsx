@@ -176,7 +176,7 @@ export function Login() {
                   to="/forgot-password"
                   className="ml-auto text-[#6236FF] hover:text-[#9D36FF] text-sm font-medium"
                 >
-                  {t('FORGOT_PASSWORD')}
+                  {t('FORGOT_PASSWORD')}?
                 </Link>
               </div>
 

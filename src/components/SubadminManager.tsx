@@ -250,23 +250,6 @@ export function SubadminManager() {
     navigate('/subadmins/create');
   };
 
-  const canCreate = hasPermission(MODULES.SUBADMINS, ACTIONS.CREATE);
-  const canEdit = hasPermission(MODULES.SUBADMINS, ACTIONS.EDIT);
-  const canDelete = hasPermission(MODULES.SUBADMINS, ACTIONS.DELETE);
-  const canView = hasPermission(MODULES.SUBADMINS, ACTIONS.VIEW);
-
-  if (!canView) {
-    return (
-      <div className="p-4 lg:p-6 flex flex-col items-center justify-center min-h-[400px]">
-        <Shield className="h-16 w-16 text-muted-foreground mb-4" />
-        <h2 className="text-2xl font-bold mb-2">{t('ACCESS_DENIED')}</h2>
-        <p className="text-muted-foreground text-center">
-          {t('YOU_DONT_HAVE_PERMISSION')} {t('SUBADMIN_MANAGEMENT')?.toLowerCase()}.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="p-4 lg:p-6 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

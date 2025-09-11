@@ -85,7 +85,7 @@ export function SubadminDetails({ }: SubadminDetailsProps) {
         <Shield className="h-16 w-16 text-muted-foreground mb-4" />
         <h2 className="text-2xl font-bold mb-2">Access Denied</h2>
         <p className="text-muted-foreground text-center">
-          You don't have permission to view subadmin details.
+          You don't have permission to view sub admin details.
         </p>
       </div>
     );
@@ -132,8 +132,8 @@ export function SubadminDetails({ }: SubadminDetailsProps) {
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div>
-            <h2 className="text-3xl font-bold">Subadmin Details</h2>
-            <p className="text-muted-foreground">View and manage subadmin information</p>
+            <h2 className="text-3xl font-bold">Sub Admin Details</h2>
+            <p className="text-muted-foreground">View and manage sub admin information</p>
           </div>
         </div>
         <div className="flex gap-2">

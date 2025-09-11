@@ -125,7 +125,7 @@ export function StatisticsCards({ data, loading }: StatisticsCardsProps) {
 export function SubadminStatisticsCards({ data, loading }: StatisticsCardsProps) {
     const stats = [
     {
-      title: 'Total Subadmins',
+      title: 'Total Sub Admins',
       value: data.totalUsers,
       icon: Users,
       color: 'text-blue-600',
@@ -133,7 +133,7 @@ export function SubadminStatisticsCards({ data, loading }: StatisticsCardsProps)
       formatter: (val: number) => val.toLocaleString(),
     },
     {
-      title: 'Active Subadmins',
+      title: 'Active Sub Admins',
       value: data.activeUsers,
       icon: UserCheck,
       color: 'text-green-600',
@@ -141,7 +141,7 @@ export function SubadminStatisticsCards({ data, loading }: StatisticsCardsProps)
       formatter: (val: number) => val.toLocaleString(),
     },
     {
-      title: 'Inactive Subadmins',
+      title: 'Inactive Sub Admins',
       value: data.inactiveUsers,
       icon: UserX,
       color: 'text-red-600',

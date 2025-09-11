@@ -43,7 +43,6 @@ export function SubadminForm({ mode }: SubadminFormProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const formValidation = FormValidation()
-  const { hasPermission } = usePermissions();
   const [countryCode] = useState("in");
 
 
@@ -54,6 +53,7 @@ export function SubadminForm({ mode }: SubadminFormProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
+    mode: "onChange",
     defaultValues: {},
   });
   const [formData, setFormData] = React.useState<SubadminFormData>({
@@ -160,26 +160,10 @@ export function SubadminForm({ mode }: SubadminFormProps) {
     navigate('/subadmins');
   };
 
-  const pageTitle = mode === 'add' ? 'Create Subadmin' : 'Edit Subadmin';
+  const pageTitle = mode === 'add' ? 'Create Sub Admin' : 'Edit Sub Admin';
 
-  // Check permissions
-  const canCreate = hasPermission(MODULES.SUBADMINS, ACTIONS.CREATE);
-  const canEdit = hasPermission(MODULES.SUBADMINS, ACTIONS.EDIT);
 
-  if ((mode === 'add' && !canCreate) || (mode === 'edit' && !canEdit)) {
-    return (
-      <div className="p-4 lg:p-6 flex flex-col items-center justify-center min-h-[400px]">
-        <Shield className="h-16 w-16 text-muted-foreground mb-4" />
-        <h2 className="text-2xl font-bold mb-2">{t('ACCESS_DENIED')}</h2>
-        <p className="text-muted-foreground text-center">
-          You don't have permission to {mode} subadmins.
-        </p>
-        <Button onClick={() => navigate('/subadmins')} className="mt-4">
-          Back to Subadmins
-        </Button>
-      </div>
-    );
-  }
+
 
 
   const inputStyle: React.CSSProperties = {
@@ -210,8 +194,8 @@ export function SubadminForm({ mode }: SubadminFormProps) {
           <h2 className="text-3xl font-bold">{pageTitle}</h2>
           <p className="text-muted-foreground">
             {mode === 'add'
-              ? 'Create a new subadmin account with specific permissions'
-              : `Edit subadmin details and permissions for ${formData.name}`
+              ? 'Create a new sub admin account with specific permissions'
+              : `Edit sub admin details and permissions`
             }
           </p>
         </div>
