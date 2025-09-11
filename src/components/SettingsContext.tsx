@@ -36,7 +36,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-  siteName: 'Chordz Admin',
+  siteName: 'Octal Admin V2',
   language: 'en',
   theme: 'light',
   dateFormat: 'MM/DD/YYYY',
@@ -50,9 +50,9 @@ const defaultSettings: Settings = {
   maintenanceMessage: 'We are currently under maintenance. Please check back later.',
   allowRegistration: true,
   autoApproveUsers: false,
-  email: 'chordz@support.com',
+  email: 'octal@support.com',
   phoneNumber: '+1 (555) 123-4567',
-  companyName: 'Chordz Ind Ltd',
+  companyName: 'Octal Ind Ltd',
   facebookUrl: '',
   twitterUrl: '',
   linkedinUrl: '',
