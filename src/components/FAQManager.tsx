@@ -647,7 +647,7 @@ export function FAQManager() {
           {selectedFAQ && (
             <div className="space-y-6">
               <div className="grid gap-4">
-                <div className='sm:w-[400px] w-[740px]'>
+                <div className=''>
                   <Label htmlFor="question">Question<span className='text-red-500'>*</span></Label>
                   <Input
                     id="question"
@@ -663,7 +663,7 @@ export function FAQManager() {
                   />
                 </div>
 
-                <div className='sm:w-[400px] w-[740px]'>
+                <div className=''>
                   <Label htmlFor="answer">Answer<span className='text-red-500'>*</span> </Label>
                   <Textarea
                     id="answer"
@@ -674,7 +674,7 @@ export function FAQManager() {
                       answer: e.target.value
                     })}
                     disabled={!isEditing}
-                    className="min-h-[200px] mt-1"
+                    className="min-h-[200px] mt-1 w-full resize-none break-all whitespace-pre-wrap"
                     placeholder="Enter Detailed Answer"
                   />
                 </div>

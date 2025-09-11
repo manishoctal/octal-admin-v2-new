@@ -177,7 +177,7 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 sm:!w-[400px]">
+        <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title Field */}
             <div className="space-y-2">
                 <Label htmlFor="title" className="text-sm font-medium">
@@ -395,7 +395,7 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                         theme="snow"
                         placeholder="Enter Notification Description..."
 
-                        className='overflow-hidden bg-white dark:bg-black w-[543px] sm:w-[402px]'
+                        className='overflow-hidden bg-white dark:bg-black my-quill'
                     />
 
                 </div>

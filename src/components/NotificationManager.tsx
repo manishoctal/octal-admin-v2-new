@@ -201,7 +201,7 @@ export function NotificationManager() {
                 Send Notification
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-2xl  max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Send New Notification</DialogTitle>
                 <DialogDescription>
@@ -387,9 +387,9 @@ export function NotificationManager() {
       {/* Notification Details Dialog */}
       {selectedNotification && (
         <Dialog open={!!selectedNotification} onOpenChange={() => setSelectedNotification(null)} >
-          <DialogContent className="max-w-2xl">
-            <DialogHeader className='text-left'>
-              <DialogTitle  className="break-words break-all leading-snug text-pretty sm:w-[400px] w-[550px] mt-3">{helpers.capitalizeFirstWord(selectedNotification?.title)}</DialogTitle>
+          <DialogContent className="!max-w-2xl">
+            <DialogHeader className='text-left mt-4'>
+              <DialogTitle  className="text-sm leading-snug whitespace-pre-wrap break-all">{helpers.capitalizeFirstWord(selectedNotification?.title)}</DialogTitle>
               <DialogDescription>
                 Notification details and analytics
               </DialogDescription>
@@ -406,10 +406,10 @@ export function NotificationManager() {
                
               </div>
 
-              <div>
+              <div className=''>
                 <p className="text-sm font-medium mb-2">Message</p>
-                <div className="p-3 bg-muted rounded-lg">
-                  <p className="text-sm  break-words break-all leading-snug text-pretty sm:w-[370px] w-[500px]" dangerouslySetInnerHTML={{__html:selectedNotification?.description}}/>
+                <div className="p-3 bg-muted rounded-lg ">
+                  <p className="text-sm leading-snug whitespace-pre-wrap break-all " dangerouslySetInnerHTML={{__html:selectedNotification?.description}}/>
                 </div>
               </div>
 
