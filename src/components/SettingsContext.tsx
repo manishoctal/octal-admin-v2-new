@@ -129,13 +129,22 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     };
     root.style.setProperty('--font-size', fontSizeMap[settings.fontSize]);
 
-    // Apply font family
     const fontFamilyMap = {
-      'system': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      'sans-serif': '"Inter", "Helvetica Neue", Arial, sans-serif',
-      'serif': '"Georgia", "Times New Roman", Times, serif',
-      'monospace': '"JetBrains Mono", "Fira Code", "Monaco", Consolas, monospace'
+      system: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif`,
+      "sans-serif": `"Inter", "Helvetica Neue", Arial, sans-serif`,
+      serif: `"Georgia", "Times New Roman", Times, serif`,
+      monospace: `"JetBrains Mono", "Fira Code", "Monaco", Consolas, monospace`,
+      arial: `Arial, "Helvetica Neue", sans-serif`,
+      verdana: `Verdana, Geneva, sans-serif`,
+      tahoma: `Tahoma, Geneva, sans-serif`,
+      trebuchet: `"Trebuchet MS", "Lucida Grande", Lucida, sans-serif`,
+      comic: `"Comic Sans MS", "Comic Sans", cursive, sans-serif`,
+      georgia: `Georgia, serif`,
+      garamond: `Garamond, "Baskerville", serif`,
+      "courier-new": `"Courier New", Courier, monospace`,
+      "lucida-console": `"Lucida Console", Monaco, monospace`,
     };
+
     root.style.setProperty('--font-family', fontFamilyMap[settings.fontFamily]);
 
     // Apply animation settings

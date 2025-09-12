@@ -57,8 +57,8 @@ export function Settings() {
 
   const [fontFamily, setFontFamily] = useState<SettingsData>(settings?.fontFamily);
   const [fontSize, setFontSize] = useState<SettingsData>(settings?.fontSize);
-  
-  
+
+
   const { t } = useTranslation()
   const formValidation = FormValidation()
   type FormValues = {
@@ -155,7 +155,7 @@ export function Settings() {
     try {
       const resp = await apiPut(apiPath.getSetting, { ...e, maintenance: tempSettings?.maintenanceMode })
       if (resp?.data?.success) {
-        updateSettings({ ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance, enableAnimations: tempSettings?.enableAnimations, fontFamily:fontFamily||tempSettings?.fontFamily,fontSize:fontSize||tempSettings?.fontSize, compactMode: tempSettings?.compactMode, theme: theme || settings?.theme });
+        updateSettings({ ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance, enableAnimations: tempSettings?.enableAnimations, fontFamily: fontFamily || tempSettings?.fontFamily, fontSize: fontSize || tempSettings?.fontSize, compactMode: tempSettings?.compactMode, theme: theme || settings?.theme });
         SuccessToastMessage({ message: resp?.data?.message })
 
         setHasChanges(false)
@@ -178,7 +178,7 @@ export function Settings() {
             <p className="text-muted-foreground">Manage your application settings and configuration</p>
           </div>
           <div className="sm:flex items-center gap-2 ">
-            <Button type='submit' disabled={!isDirty && !hasChanges && (!theme || theme == settings?.theme)&&(!fontFamily || fontFamily == settings?.fontFamily)&&(!fontSize || fontSize == settings?.fontSize)} className="w-full sm:w-auto mt-1 sm:mt-0">
+            <Button type='submit' disabled={!isDirty && !hasChanges && (!theme || theme == settings?.theme) && (!fontFamily || fontFamily == settings?.fontFamily) && (!fontSize || fontSize == settings?.fontSize)} className="w-full sm:w-auto mt-1 sm:mt-0">
               <Save className="w-4 h-4 mr-2" />
               {isSaving ? 'Saving...' : 'Save Settings'}
             </Button>
@@ -390,7 +390,7 @@ export function Settings() {
                     Font Size
                   </Label>
                   <Select
-                    value={fontSize||settings?.fontSize}
+                    value={fontSize || settings?.fontSize}
                     onValueChange={(value: 'small' | 'medium' | 'large' | 'extra-large') => setFontSize(value)}
                   >
                     <SelectTrigger>
@@ -410,18 +410,55 @@ export function Settings() {
                     Font Family
                   </Label>
                   <Select
-                    value={fontFamily||settings?.fontFamily}
+                    value={fontFamily || settings?.fontFamily}
                     onValueChange={(value: 'system' | 'sans-serif' | 'serif' | 'monospace') => setFontFamily(value)}
                   >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="system">System Default</SelectItem>
-                      <SelectItem value="sans-serif">Sans Serif</SelectItem>
-                      <SelectItem value="serif">Serif</SelectItem>
-                      <SelectItem value="monospace">Monospace</SelectItem>
+                      <SelectItem value="system" style={{ fontFamily: "inherit" }}>
+                        System Default
+                      </SelectItem>
+                      <SelectItem value="sans-serif" style={{ fontFamily: "sans-serif" }}>
+                        Sans Serif
+                      </SelectItem>
+                      <SelectItem value="serif" style={{ fontFamily: "serif" }}>
+                        Serif
+                      </SelectItem>
+                      <SelectItem value="monospace" style={{ fontFamily: "monospace" }}>
+                        Monospace
+                      </SelectItem>
+
+                      <SelectItem value="arial" style={{ fontFamily: "Arial, sans-serif" }}>
+                        Arial
+                      </SelectItem>
+                      <SelectItem value="verdana" style={{ fontFamily: "Verdana, sans-serif" }}>
+                        Verdana
+                      </SelectItem>
+                      <SelectItem value="tahoma" style={{ fontFamily: "Tahoma, sans-serif" }}>
+                        Tahoma
+                      </SelectItem>
+                      <SelectItem value="trebuchet" style={{ fontFamily: "'Trebuchet MS', sans-serif" }}>
+                        Trebuchet MS
+                      </SelectItem>
+                      <SelectItem value="comic" style={{ fontFamily: "'Comic Sans MS', cursive" }}>
+                        Comic Sans MS
+                      </SelectItem>
+                      <SelectItem value="georgia" style={{ fontFamily: "Georgia, serif" }}>
+                        Georgia
+                      </SelectItem>
+                      <SelectItem value="garamond" style={{ fontFamily: "Garamond, serif" }}>
+                        Garamond
+                      </SelectItem>
+                      <SelectItem value="courier-new" style={{ fontFamily: "'Courier New', monospace" }}>
+                        Courier New
+                      </SelectItem>
+                      <SelectItem value="lucida-console" style={{ fontFamily: "'Lucida Console', monospace" }}>
+                        Lucida Console
+                      </SelectItem>
                     </SelectContent>
+
                   </Select>
                 </div>
 
