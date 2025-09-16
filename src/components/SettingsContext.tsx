@@ -1,3 +1,5 @@
+import { apiGet } from '@/utils/apiFetch';
+import apiPath from '@/utils/apiPath';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface Settings {
@@ -75,6 +77,25 @@ interface SettingsProviderProps {
 
 export function SettingsProvider({ children }: SettingsProviderProps) {
   const [settings, setSettings] = useState<Settings>(defaultSettings);
+  const [adminSetting, setAdminSetting] = useState({});
+
+  const getAdminSettingDta = async () => {
+    try {
+      const resp = await apiGet(apiPath.getSetting)
+      if (resp?.data?.success) {
+        setAdminSetting(resp?.data?.results)
+      }
+
+    } catch (err) {
+      console.log('errrrrr', err)
+    }
+
+  }
+
+  useEffect(() => {
+    getAdminSettingDta()
+  }, [])
+
 
   // Load settings from localStorage on mount
   useEffect(() => {
@@ -214,6 +235,8 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     <SettingsContext.Provider value={{
       settings,
       updateSettings,
+      adminSetting,
+      getAdminSettingDta,
       resetSettings,
       formatDate,
       formatCurrency

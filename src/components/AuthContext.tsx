@@ -100,9 +100,9 @@ const MOCK_USERS: Record<string, User & { password: string }> = {
   }
 };
 
-export function AuthProvider({ children }:Readonly<AuthProviderProps>) {
+export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   const navigate = useNavigate()
-  const location=useLocation()
+  const location = useLocation()
   const [user, setUser] = useState<User | null>(() =>
     window?.localStorage.getItem('token')
       ? jwtDecode(window?.localStorage.getItem('token'))
@@ -111,11 +111,11 @@ export function AuthProvider({ children }:Readonly<AuthProviderProps>) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if(user?.isPasswordSet==false&&location?.pathname!=='/change-password'){
+    if (user?.isPasswordSet == false && location?.pathname !== '/change-password') {
       navigate('/change-password')
     }
-  
-  }, [user,location]);
+
+  }, [user, location]);
 
 
 
@@ -154,7 +154,7 @@ export function AuthProvider({ children }:Readonly<AuthProviderProps>) {
           navigate('/dashboard')
           return data
         }
-        
+
       } else {
         return data
       }
@@ -180,23 +180,23 @@ export function AuthProvider({ children }:Readonly<AuthProviderProps>) {
 
   };
 
-  const updateUser = async(userData: Partial<User>) => {
+  const updateUser = async (userData: Partial<User>) => {
 
     try {
-    const res = await apiPost(apiPath.editProfile, userData)
-    if(res?.data?.success){
-    const token = res?.data?.results?.token ?? null
-    const refreshToken = res?.data?.results?.refresh_token ?? null
-    window?.localStorage.setItem('token', token)
-    window?.localStorage.setItem('refresh_token', refreshToken)
-    setUser(jwtDecode(token))
-    SuccessToastMessage({message:res?.data?.message})
+      const res = await apiPost(apiPath.editProfile, userData)
+      if (res?.data?.success) {
+        const token = res?.data?.results?.token ?? null
+        const refreshToken = res?.data?.results?.refresh_token ?? null
+        window?.localStorage.setItem('token', token)
+        window?.localStorage.setItem('refresh_token', refreshToken)
+        setUser(jwtDecode(token))
+        SuccessToastMessage({ message: res?.data?.message })
 
-  }
-  } catch (err) {
-    console.error('err:', err)
-    ErrorToastMessage({message:err?.response?.data?.message})
-  }
+      }
+    } catch (err) {
+      console.error('err:', err)
+      ErrorToastMessage({ message: err?.response?.data?.message })
+    }
 
   };
 
@@ -253,25 +253,25 @@ export const subadminAPI = {
         if (navigate) navigate('/subadmins');
         return
       }
-      
+
     } catch (error: any) {
       console.error('Error creating subadmin:', error);
-      ErrorToastMessage({ message:error?.response?.data?.message });
+      ErrorToastMessage({ message: error?.response?.data?.message });
     }
   },
 
 
 
 
-  updateSubadmin: async (id: string,payload,navigate?: (path: string) => void): Promise<User | undefined> => {
+  updateSubadmin: async (id: string, payload, navigate?: (path: string) => void): Promise<User | undefined> => {
     try {
-      const response = await apiPut(apiPath.subadminChangeStatus+'/update/'+id, payload);
+      const response = await apiPut(apiPath.subadminChangeStatus + '/update/' + id, payload);
       if (response?.data?.results) {
         SuccessToastMessage({ message: response?.data?.message });
         if (navigate) navigate('/subadmins');
         return
       }
-      
+
     } catch (error: any) {
       console.error('Error creating subadmin:', error);
       ErrorToastMessage({ message: error?.response?.data?.message });
@@ -303,7 +303,7 @@ export const subadminAPI = {
         SuccessToastMessage({ message: response?.data?.message });
         return response
       }
-     
+
       return response
     } catch (error: any) {
       console.error('Error delete subadmin:', error);

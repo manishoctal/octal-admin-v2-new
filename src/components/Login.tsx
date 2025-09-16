@@ -22,7 +22,7 @@ import { Avatar, AvatarImage } from './ui/avatar';
 export function Login() {
   const { t } = useTranslation();
   const { login } = useAuth();
-  const { settings } = useSettings();
+  const { settings,adminSetting } = useSettings();
   const [isLoading, setIsLoading] = useState(false);
   const formValidation = FormValidation()
 
@@ -111,7 +111,7 @@ export function Login() {
     <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10 dark:from-primary/10 dark:via-background dark:to-primary/20 p-4">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <img
-          src="/images/logo.svg"
+          src={adminSetting?.logo||"/images/logo.svg"}
           alt="background logo"
           className="w-[600px] opacity-[0.03] dark:opacity-[0.05]"
         />
@@ -122,7 +122,7 @@ export function Login() {
           <div className="flex justify-center">
             <div className="p-3 rounded-full bg-primary/10 dark:bg-primary/20">
               <Avatar className="m-auto w-[130px] h-[44px] py-2 max-w-[267px]">
-                <AvatarImage src={'/images/logo.svg'} alt={'logo'} className='h-[30px]' />
+                <AvatarImage src={adminSetting?.logo||'/images/logo.svg'} alt={'logo'} className='h-[30px]' />
               </Avatar>
             </div>
           </div>

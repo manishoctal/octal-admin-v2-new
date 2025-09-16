@@ -21,7 +21,7 @@ export function PasswordReset({ token }: PasswordResetProps) {
   const params = useParams()
   token = params?.token
   const navigate = useNavigate();
-  const { settings } = useSettings();
+  const { settings,adminSetting } = useSettings();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -167,7 +167,7 @@ export function PasswordReset({ token }: PasswordResetProps) {
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <img
-          src="/images/logo.svg"
+          src={adminSetting?.logo||"/images/logo.svg"}
           alt="background logo"
           className="w-[600px] opacity-[0.03] dark:opacity-[0.05]"
         />
@@ -177,7 +177,7 @@ export function PasswordReset({ token }: PasswordResetProps) {
         <div className="flex justify-center">
           <div className="p-3 rounded-full bg-primary/10 dark:bg-primary/20">
             <Avatar className="m-auto w-[130px] h-[44px] py-2 max-w-[267px]">
-              <AvatarImage src={'/images/logo.svg'} alt={'logo'} className='h-[30px]' />
+              <AvatarImage src={adminSetting?.logo||'/images/logo.svg'} alt={'logo'} className='h-[30px]' />
             </Avatar>
           </div>
         </div>

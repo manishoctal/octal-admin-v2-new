@@ -25,19 +25,23 @@ import {
   AlertTriangle,
   CheckCircle,
   CalendarCog,
-  Type
+  ImageIcon,
+  Upload,
+  X
 } from 'lucide-react';
 import { useSettings, SettingsData } from './SettingsContext';
 import apiPath from '@/utils/apiPath';
-import { apiGet, apiPut } from '@/utils/apiFetch';
+import { apiGet, apiPost, apiPut } from '@/utils/apiFetch';
 import { Controller, useForm } from "react-hook-form"
 
 import { useTranslation } from './TranslationContext';
 import FormValidation from '@/utils/formValidation';
 import { ErrorToastMessage, SuccessToastMessage } from './common/sonner';
+import axios from 'axios';
+import helpers from '@/utils/helpers';
 
 export function Settings() {
-  const { settings, updateSettings, } = useSettings();
+  const { settings, updateSettings,getAdminSettingDta } = useSettings();
   const [isSaving, setIsSaving] = useState(false);
 
   const {
@@ -49,15 +53,17 @@ export function Settings() {
   } = useForm<FormValues>({
     defaultValues: {},
   });
-
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const [hasChanges, setHasChanges] = useState(isDirty || false);
   const [tempSettings, setTempSettings] = useState<SettingsData>(settings);
   const [theme, setTheme] = useState<SettingsData>(settings?.theme);
-
+  const [file, setFile] = useState()
+  const [key, setKey] = useState("");
+  const [url, setURL] = useState("");
   const [fontFamily, setFontFamily] = useState<SettingsData>(settings?.fontFamily);
   const [fontSize, setFontSize] = useState<SettingsData>(settings?.fontSize);
-
+  const [objUrl, setObjUrl] = useState('')
 
   const { t } = useTranslation()
   const formValidation = FormValidation()
@@ -92,6 +98,7 @@ export function Settings() {
       const resp = await apiGet(apiPath.getSetting)
       if (resp?.data?.success) {
         reset(resp?.data?.results)
+        setObjUrl(resp?.data?.results?.logo)
         const localStorageData = localStorage.getItem('adminPanelSettings')
         if (!localStorageData) {
           const data = { ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance }
@@ -149,15 +156,54 @@ export function Settings() {
   ];
 
 
+  const uploadFile = (file: File, uploadUrl: string) => {
+    return new Promise<string>(async (resolve, reject) => {
+      try {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+
+        reader.onloadend = async () => {
+          try {
+            const binaryData = reader.result;
+            const contentType = file?.type || "application/octet-stream";
+
+            const resp = await axios.put(uploadUrl, binaryData, {
+              headers: {
+                "Content-Type": contentType,
+              },
+            });
+
+            if (resp?.status === 200) {
+              resolve(uploadUrl);
+            } else {
+              reject(new Error("Upload failed"));
+            }
+          } catch (err) {
+            reject(err);
+          }
+        };
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
+
 
   const handleUpdate = async (e) => {
     setIsSaving(true)
     try {
-      const resp = await apiPut(apiPath.getSetting, { ...e, maintenance: tempSettings?.maintenanceMode })
+      if(!objUrl){
+        ErrorToastMessage({ message: 'Logo is required.' })
+        return
+      }
+      if (file) {
+        await uploadFile(file, url);
+      }
+      const resp = await apiPut(apiPath.getSetting, { ...e, maintenance: tempSettings?.maintenanceMode, logo: helpers.ternaryCondition(key, key, undefined) })
       if (resp?.data?.success) {
         updateSettings({ ...resp?.data?.results, maintenanceMode: resp?.data?.results?.maintenance, enableAnimations: tempSettings?.enableAnimations, fontFamily: fontFamily || tempSettings?.fontFamily, fontSize: fontSize || tempSettings?.fontSize, compactMode: tempSettings?.compactMode, theme: theme || settings?.theme });
         SuccessToastMessage({ message: resp?.data?.message })
-
+        getAdminSettingDta()
         setHasChanges(false)
       }
     } catch (err) {
@@ -168,6 +214,73 @@ export function Settings() {
     }
 
   }
+
+  const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp','image/svg+xml'];
+  const handleLogoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file?.type?.startsWith('image/')) {
+      ErrorToastMessage({ message: 'Please select a valid image file' })
+      return;
+    }
+
+    if (!ALLOWED_TYPES.includes(file?.type)) {
+      ErrorToastMessage({ message: 'Please upload a valid image file (JPEG, PNG, or WebP)' })
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file?.size > 5 * 1024 * 1024) {
+      ErrorToastMessage({ message: 'Image file size must be less than 5MB' })
+      return;
+    }
+
+    if (file) {
+      setFile(file)
+      const payloadPre = {
+        contentType: file?.type,
+        folder: "setting",
+      };
+      const path = apiPath.generatePreSignUrl;
+      const result = await apiPost(path, payloadPre);
+      if (result?.data?.success) {
+        setKey(result?.data?.results?.key);
+        setURL(result?.data?.results?.url);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result as string;
+          setObjUrl(result)
+        };
+
+        reader.onerror = () => {
+          ErrorToastMessage({ message: 'Error reading the image file' })
+        };
+        reader.readAsDataURL(file);
+
+      }
+    }
+    setHasChanges(true);
+
+  };
+
+  const handleRemoveLogo = () => {
+    setObjUrl('')
+    setFile('')
+    setKey('')
+    setURL('')
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    setHasChanges(false);
+  };
+
+  const triggerFileUpload = () => {
+    fileInputRef?.current?.click();
+  };
+
+
 
   return (
     <form onSubmit={handleSubmit(handleUpdate)}>
@@ -613,86 +726,160 @@ export function Settings() {
             </CardContent>
           </Card>
 
+
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ImageIcon className="w-5 h-5" />
+                Branding
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="logo">Admin Panel Logo <span className='text-red-500'>*</span></Label>
+                <p className="text-sm text-muted-foreground">
+                  Upload a logo to customize your admin panel header. Recommended size: 32x32px or larger. Max file size: 5MB.
+                </p>
+
+                <div className="flex items-start gap-4">
+                  {/* Logo Preview */}
+                  <div className="flex items-center justify-center w-16 h-16 border-2 border-dashed border-muted rounded-lg bg-muted/10">
+                    {objUrl ? (
+                      <img
+                        src={objUrl}
+                        alt="Logo preview"
+                        className="w-full h-full object-contain rounded-lg"
+                      />
+                    ) : (
+                      <ImageIcon className="w-6 h-6 text-muted-foreground" />
+                    )}
+                  </div>
+
+                  {/* Upload Controls */}
+                  <div className="flex-1 space-y-2">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="hidden"
+                    />
+
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={triggerFileUpload}
+                        className="flex items-center gap-2"
+                      >
+                        <Upload className="w-4 h-4" />
+                        Upload Logo
+                      </Button>
+
+                      {objUrl && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={handleRemoveLogo}
+                          className="flex items-center gap-2 text-destructive hover:text-destructive"
+                        >
+                          <X className="w-4 h-4" />
+                          Remove
+                        </Button>
+                      )}
+                    </div>
+
+                    <p className="text-xs text-muted-foreground">
+                      Supported formats: PNG, JPG, JPEG, WEBP, SVG
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Globe className="w-5 h-5" />
+                Social Media Links
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 grid grid-cols-1 lg:grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <SharedField
+                  id="facebookLink"
+                  label={<><Facebook className="w-4 h-4 text-blue-600 mr-1" /><span>Facebook</span></>}
+                  name="facebookLink"
+                  type="text"
+                  placeholder={'Enter Facebook Link'}
+                  registration={register('facebookLink', formValidation.facebookLink)}
+                  error={errors}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <SharedField
+                  id="twitterLink"
+                  label={<><Twitter className="w-4 h-4 text-blue-400 mr-1" /><span className=''>Twitter</span></>}
+                  name="twitterLink"
+                  type="text"
+                  placeholder={'Enter Twitter Link'}
+                  registration={register('twitterLink', formValidation.twitterLink)}
+                  error={errors}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <SharedField
+                  id="instagramLink"
+                  label={<><Instagram className="w-4 h-4 text-pink-600 mr-1" /><span className=''>Instagram</span></>}
+                  name="instagramLink"
+                  type="text"
+                  placeholder={'Enter Instagram Link'}
+                  registration={register('instagramLink', formValidation.instagramLink)}
+                  error={errors}
+                  required
+                />
+
+
+
+              </div>
+
+              <div className="space-y-2">
+                <SharedField
+                  id="linkedinLink"
+                  label={<><Linkedin className="w-4 h-4 text-blue-700 mr-1" /><span className=''>LinkedIn</span></>}
+                  name="linkedinLink"
+                  type="text"
+                  placeholder={'Enter Linkedin Link'}
+                  registration={register('linkedinLink', formValidation.linkedinLink)}
+                  error={errors}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <SharedField
+                  id="youtubeLink"
+                  label={<><Youtube className="w-4 h-4 text-red-600 mr-1" /><span className=''>YouTube</span></>}
+                  name="youtubeLink"
+                  type="text"
+                  placeholder={'Enter Youtube Link'}
+                  registration={register('youtubeLink', formValidation.youtubeLink)}
+                  error={errors}
+                  required
+                />
+
+              </div>
+            </CardContent>
+          </Card>
         </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Globe className="w-5 h-5" />
-              Social Media Links
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <SharedField
-                id="facebookLink"
-                label={<><Facebook className="w-4 h-4 text-blue-600 mr-1" /><span>Facebook</span></>}
-                name="facebookLink"
-                type="text"
-                placeholder={'Enter Facebook Link'}
-                registration={register('facebookLink', formValidation.facebookLink)}
-                error={errors}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <SharedField
-                id="twitterLink"
-                label={<><Twitter className="w-4 h-4 text-blue-400 mr-1" /><span className=''>Twitter</span></>}
-                name="twitterLink"
-                type="text"
-                placeholder={'Enter Twitter Link'}
-                registration={register('twitterLink', formValidation.twitterLink)}
-                error={errors}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <SharedField
-                id="instagramLink"
-                label={<><Instagram className="w-4 h-4 text-pink-600 mr-1" /><span className=''>Instagram</span></>}
-                name="instagramLink"
-                type="text"
-                placeholder={'Enter Instagram Link'}
-                registration={register('instagramLink', formValidation.instagramLink)}
-                error={errors}
-                required
-              />
-
-
-
-            </div>
-
-            <div className="space-y-2">
-              <SharedField
-                id="linkedinLink"
-                label={<><Linkedin className="w-4 h-4 text-blue-700 mr-1" /><span className=''>LinkedIn</span></>}
-                name="linkedinLink"
-                type="text"
-                placeholder={'Enter Linkedin Link'}
-                registration={register('linkedinLink', formValidation.linkedinLink)}
-                error={errors}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <SharedField
-                id="youtubeLink"
-                label={<><Youtube className="w-4 h-4 text-red-600 mr-1" /><span className=''>YouTube</span></>}
-                name="youtubeLink"
-                type="text"
-                placeholder={'Enter Youtube Link'}
-                registration={register('youtubeLink', formValidation.youtubeLink)}
-                error={errors}
-                required
-              />
-
-            </div>
-          </CardContent>
-        </Card>
 
       </div>
     </form >
