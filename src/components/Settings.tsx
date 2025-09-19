@@ -39,9 +39,8 @@ import FormValidation from '@/utils/formValidation';
 import { ErrorToastMessage, SuccessToastMessage } from './common/sonner';
 import axios from 'axios';
 import helpers from '@/utils/helpers';
-
 export function Settings() {
-  const { settings, updateSettings,getAdminSettingDta } = useSettings();
+  const { settings, updateSettings, getAdminSettingDta } = useSettings();
   const [isSaving, setIsSaving] = useState(false);
 
   const {
@@ -52,6 +51,7 @@ export function Settings() {
     formState: { errors, isSubmitting, isDirty },
   } = useForm<FormValues>({
     defaultValues: {},
+    mode:"onChange"
   });
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -192,7 +192,7 @@ export function Settings() {
   const handleUpdate = async (e) => {
     setIsSaving(true)
     try {
-      if(!objUrl){
+      if (!objUrl) {
         ErrorToastMessage({ message: 'Logo is required.' })
         return
       }
@@ -215,7 +215,7 @@ export function Settings() {
 
   }
 
-  const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp','image/svg+xml'];
+  const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml'];
   const handleLogoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
     if (!file) return;
@@ -723,165 +723,180 @@ export function Settings() {
                   onCheckedChange={(checked) => handleSettingChange('maintenanceMode', checked)}
                 />
               </div>
-            </CardContent>
-          </Card>
 
 
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <ImageIcon className="w-5 h-5" />
-                Branding
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="logo">Admin Panel Logo <span className='text-red-500'>*</span></Label>
-                <p className="text-sm text-muted-foreground">
-                  Upload a logo to customize your admin panel header. Recommended size: 32x32px or larger. Max file size: 5MB.
-                </p>
+                <SharedField
+                  id="maintenanceMessage"
+                  label={t('MAINTENANCE_MESSAGE')}
+                  name="maintenanceMessage"
+                  type="textarea"
+                  placeholder={t('ENTER_MAINTENANCE_MESSAGE')}
+                  registration={register('maintenanceMessage', formValidation.maintenanceMessage)}
+                  error={errors}
+                  required
+                />
+              </div>
+             
+          </CardContent>
+        </Card>
 
-                <div className="flex items-start gap-4">
-                  {/* Logo Preview */}
-                  <div className="flex items-center justify-center w-16 h-16 border-2 border-dashed border-muted rounded-lg bg-muted/10">
-                    {objUrl ? (
-                      <img
-                        src={objUrl}
-                        alt="Logo preview"
-                        className="w-full h-full object-contain rounded-lg"
-                      />
-                    ) : (
-                      <ImageIcon className="w-6 h-6 text-muted-foreground" />
-                    )}
-                  </div>
 
-                  {/* Upload Controls */}
-                  <div className="flex-1 space-y-2">
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleLogoUpload}
-                      className="hidden"
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ImageIcon className="w-5 h-5" />
+              Branding
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="logo">Admin Panel Logo <span className='text-red-500'>*</span></Label>
+              <p className="text-sm text-muted-foreground">
+                Upload a logo to customize your admin panel header. Recommended size: 32x32px or larger. Max file size: 5MB.
+              </p>
+
+              <div className="flex items-start gap-4">
+                {/* Logo Preview */}
+                <div className="flex items-center justify-center w-16 h-16 border-2 border-dashed border-muted rounded-lg bg-muted/10">
+                  {objUrl ? (
+                    <img
+                      src={objUrl}
+                      alt="Logo preview"
+                      className="w-full h-full object-contain rounded-lg"
                     />
+                  ) : (
+                    <ImageIcon className="w-6 h-6 text-muted-foreground" />
+                  )}
+                </div>
 
-                    <div className="flex flex-wrap gap-2">
+                {/* Upload Controls */}
+                <div className="flex-1 space-y-2">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="hidden"
+                  />
+
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={triggerFileUpload}
+                      className="flex items-center gap-2"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Upload Logo
+                    </Button>
+
+                    {objUrl && (
                       <Button
                         type="button"
                         variant="outline"
                         size="sm"
-                        onClick={triggerFileUpload}
-                        className="flex items-center gap-2"
+                        onClick={handleRemoveLogo}
+                        className="flex items-center gap-2 text-destructive hover:text-destructive"
                       >
-                        <Upload className="w-4 h-4" />
-                        Upload Logo
+                        <X className="w-4 h-4" />
+                        Remove
                       </Button>
-
-                      {objUrl && (
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={handleRemoveLogo}
-                          className="flex items-center gap-2 text-destructive hover:text-destructive"
-                        >
-                          <X className="w-4 h-4" />
-                          Remove
-                        </Button>
-                      )}
-                    </div>
-
-                    <p className="text-xs text-muted-foreground">
-                      Supported formats: PNG, JPG, JPEG, WEBP, SVG
-                    </p>
+                    )}
                   </div>
+
+                  <p className="text-xs text-muted-foreground">
+                    Supported formats: PNG, JPG, JPEG, WEBP, SVG
+                  </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Globe className="w-5 h-5" />
-                Social Media Links
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <SharedField
-                  id="facebookLink"
-                  label={<><Facebook className="w-4 h-4 text-blue-600 mr-1" /><span>Facebook</span></>}
-                  name="facebookLink"
-                  type="text"
-                  placeholder={'Enter Facebook Link'}
-                  registration={register('facebookLink', formValidation.facebookLink)}
-                  error={errors}
-                  required
-                />
-              </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Globe className="w-5 h-5" />
+              Social Media Links
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className="space-y-2">
+              <SharedField
+                id="facebookLink"
+                label={<><Facebook className="w-4 h-4 text-blue-600 mr-1" /><span>Facebook</span></>}
+                name="facebookLink"
+                type="text"
+                placeholder={'Enter Facebook Link'}
+                registration={register('facebookLink', formValidation.facebookLink)}
+                error={errors}
+                required
+              />
+            </div>
 
-              <div className="space-y-2">
-                <SharedField
-                  id="twitterLink"
-                  label={<><Twitter className="w-4 h-4 text-blue-400 mr-1" /><span className=''>Twitter</span></>}
-                  name="twitterLink"
-                  type="text"
-                  placeholder={'Enter Twitter Link'}
-                  registration={register('twitterLink', formValidation.twitterLink)}
-                  error={errors}
-                  required
-                />
-              </div>
+            <div className="space-y-2">
+              <SharedField
+                id="twitterLink"
+                label={<><Twitter className="w-4 h-4 text-blue-400 mr-1" /><span className=''>Twitter</span></>}
+                name="twitterLink"
+                type="text"
+                placeholder={'Enter Twitter Link'}
+                registration={register('twitterLink', formValidation.twitterLink)}
+                error={errors}
+                required
+              />
+            </div>
 
-              <div className="space-y-2">
-                <SharedField
-                  id="instagramLink"
-                  label={<><Instagram className="w-4 h-4 text-pink-600 mr-1" /><span className=''>Instagram</span></>}
-                  name="instagramLink"
-                  type="text"
-                  placeholder={'Enter Instagram Link'}
-                  registration={register('instagramLink', formValidation.instagramLink)}
-                  error={errors}
-                  required
-                />
+            <div className="space-y-2">
+              <SharedField
+                id="instagramLink"
+                label={<><Instagram className="w-4 h-4 text-pink-600 mr-1" /><span className=''>Instagram</span></>}
+                name="instagramLink"
+                type="text"
+                placeholder={'Enter Instagram Link'}
+                registration={register('instagramLink', formValidation.instagramLink)}
+                error={errors}
+                required
+              />
 
 
 
-              </div>
+            </div>
 
-              <div className="space-y-2">
-                <SharedField
-                  id="linkedinLink"
-                  label={<><Linkedin className="w-4 h-4 text-blue-700 mr-1" /><span className=''>LinkedIn</span></>}
-                  name="linkedinLink"
-                  type="text"
-                  placeholder={'Enter Linkedin Link'}
-                  registration={register('linkedinLink', formValidation.linkedinLink)}
-                  error={errors}
-                  required
-                />
-              </div>
+            <div className="space-y-2">
+              <SharedField
+                id="linkedinLink"
+                label={<><Linkedin className="w-4 h-4 text-blue-700 mr-1" /><span className=''>LinkedIn</span></>}
+                name="linkedinLink"
+                type="text"
+                placeholder={'Enter Linkedin Link'}
+                registration={register('linkedinLink', formValidation.linkedinLink)}
+                error={errors}
+                required
+              />
+            </div>
 
-              <div className="space-y-2">
-                <SharedField
-                  id="youtubeLink"
-                  label={<><Youtube className="w-4 h-4 text-red-600 mr-1" /><span className=''>YouTube</span></>}
-                  name="youtubeLink"
-                  type="text"
-                  placeholder={'Enter Youtube Link'}
-                  registration={register('youtubeLink', formValidation.youtubeLink)}
-                  error={errors}
-                  required
-                />
+            <div className="space-y-2">
+              <SharedField
+                id="youtubeLink"
+                label={<><Youtube className="w-4 h-4 text-red-600 mr-1" /><span className=''>YouTube</span></>}
+                name="youtubeLink"
+                type="text"
+                placeholder={'Enter Youtube Link'}
+                registration={register('youtubeLink', formValidation.youtubeLink)}
+                error={errors}
+                required
+              />
 
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
+    </div>
     </form >
   );
 }

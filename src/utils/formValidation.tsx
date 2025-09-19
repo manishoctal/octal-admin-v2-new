@@ -172,6 +172,25 @@ const FormValidation = () => {
       },
     },
 
+    maintenanceMessage: {
+      required: t("MAINTENANCE_MESSAGE_IS_REQUIRED"),
+      pattern: {
+        value: /^[^\s].*/,
+        message: t("CANNOT_START_WITH_A_SPACE"),
+      },
+      minLength: {
+        value: 2,
+        message: t("MINIMUM_LENGTH_MUST_BE_2"),
+      },
+      maxLength: {
+        value: 200,
+        message: t("MAXIMUM_LENGTH_SHOULD_BE_200_CHARACTERS"),
+      },
+      validate: {
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+      },
+    },
+
 
     companyName: {
       required: t("PLEASE_ENTER_COMPANY_NAME"),

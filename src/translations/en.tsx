@@ -188,7 +188,11 @@ const en: TranslationKeys = {
     LEVEL:"Level",
     ACCOUNT:"Error Type",
     MESSAGE:"Message",
-    CANNOT_START_WITH_A_SPACE:"White space not allowed."
+    CANNOT_START_WITH_A_SPACE:"White space not allowed.",
+    MAINTENANCE_MESSAGE:"Maintenance Message",
+    ENTER_MAINTENANCE_MESSAGE:"Enter maintenance message...",
+    MAINTENANCE_MESSAGE_IS_REQUIRED:"Maintenance message is required.",
+    MAXIMUM_LENGTH_SHOULD_BE_200_CHARACTERS:"Maximum length must be less than 300 characters."
 
 
 
