@@ -187,7 +187,8 @@ const en: TranslationKeys = {
     METHOD:"Method",
     LEVEL:"Level",
     ACCOUNT:"Error Type",
-    MESSAGE:"Message"
+    MESSAGE:"Message",
+    CANNOT_START_WITH_A_SPACE:"White space not allowed."
 
 
 
