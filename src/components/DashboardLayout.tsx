@@ -303,7 +303,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <SidebarHeader className="border-b border-sidebar-border p-4">
               <div className="flex items-center gap-2">
                 <Avatar className="h-10 w-10 ring-2 ring-background shadow-sm cursor-pointer" onClick={()=>{navigate('/dashboard')}}>
-                  <AvatarImage src={adminSetting?.logo||'/images/logo.svg'} alt={'logo'} />
+                  <AvatarImage src={adminSetting?.logo} alt={'logo'} />
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{settings?.siteName}</span>
