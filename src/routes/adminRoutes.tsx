@@ -36,6 +36,7 @@ import { StaticContentEditor } from '@/components/StaticContentEditor';
 import { NotificationManager } from '@/components/NotificationManager';
 import { ReportManager } from '@/components/ReportManager';
 import { SecretCrushManager } from '@/components/SecretCrush';
+import { ErrorLogsManager } from '@/components/ErrorLogsManager';
 
 
 const AdminRoutes = {
@@ -146,6 +147,9 @@ const AdminRoutes = {
 
         // secret crush 
         { path: 'secret-crush', element: <ProtectedModuleRoute route="secret-crush"><SecretCrushManager /></ProtectedModuleRoute> },
+
+         // secret crush 
+         { path: 'error-logs', element: <ProtectedModuleRoute route="error-logs"><ErrorLogsManager /></ProtectedModuleRoute> },
     ],
 }
 export default AdminRoutes

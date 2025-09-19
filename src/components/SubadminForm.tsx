@@ -327,7 +327,7 @@ export function SubadminForm({ mode }: SubadminFormProps) {
                 </thead>
                 <tbody>
                   {Object.entries(MODULES).map(([key, module]) => {
-                    if (module === MODULES.SUBADMINS && formData.role !== "subadmin") {
+                    if ((module === MODULES.SUBADMINS||module === MODULES.ERROR_LOGS) && formData.role !== "subadmin") {
                       return null;
                     }
                     const allowedActions = MODULE_ACTIONS[module] || [];

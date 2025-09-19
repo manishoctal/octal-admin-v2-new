@@ -120,12 +120,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     // },
 
 
-    // {
-    //   icon: Target,
-    //   label: t('O_INTENT'),
-    //   path: 'intentions',
-    //   module: MODULES.INTENTIONS
-    // },
+    {
+      icon: Target,
+      label: t('O_ERROR_LOGS'),
+      path: 'error-logs',
+      module: MODULES.ERROR_LOGS
+    },
     
     // {
     //   icon: BookHeart,
@@ -204,7 +204,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       icon: FileSliders,
       type: "group",
       groupLabel: "System",
-      children: ["notification-manager", "settings"],
+      children: ["notification-manager","error-logs", "settings"],
     },
 
   ];

@@ -180,7 +180,16 @@ const en: TranslationKeys = {
     PLEASE_ENTER_VALID_LINKEDIN_URL: "Please enter valid linkedin app URL.",
     PLEASE_ENTER_SITE_NAME:"Site name is required.",
     PLEASE_ENTER_COMPANY_NAME:"Company name is required.",
-    JOIN_REQUEST:"Join Request"
+    JOIN_REQUEST:"Join Request",
+    O_ERROR_LOGS:"Error Logs",
+    TIMESTAMP:"Time Stamp",
+    ROUTE:"Route",
+    METHOD:"Method",
+    LEVEL:"Level",
+    ACCOUNT:"Error Type",
+    MESSAGE:"Message"
+
+
 
 
 

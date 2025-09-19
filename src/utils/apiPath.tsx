@@ -26,7 +26,8 @@ const apiPath = Object.freeze({
   getSetting: '/v1/admin/setting',
   getAllCircle: '/v1/admin/circle/all',
   getCircleJoinRequest: '/v1/admin/circle/join-requests',
-  acceptRejectCircleRequest:'/v1/admin/circle/respond-to-join-request'
+  acceptRejectCircleRequest:'/v1/admin/circle/respond-to-join-request',
+  getErrorLogs:'/v1/admin/error-logs'
 } as const);
 
 // TypeScript: keys are exact, values are string literals
