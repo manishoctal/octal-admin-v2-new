@@ -344,7 +344,7 @@ export function EmailTemplateEditor() {
                                         </Label>
                                         <Input
                                             id="subject"
-                                            maxLength={500}
+                                            maxLength={200}
                                             disabled={type}
                                             value={template?.subject}
                                             onChange={(e) =>

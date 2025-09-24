@@ -197,45 +197,21 @@ export function StaticContentManager() {
                 <TableRow className="border-b bg-muted/30">
                   <TableHead className="w-12 h-12">  {t('SR_NO')}</TableHead>
                   <TableHead className="min-w-[200px] h-12">
-                    <SortButton<UserType>
-                      field="title"
-                      sortField={sortField}
-                      onSort={handleSort}
-                    >
-                      {t('TITLE')}
-                    </SortButton>
+                  {t('TITLE')}
                   </TableHead>
 
 
                   <TableHead className="min-w-[100px] h-12">
 
-                    <SortButton<UserType>
-                      field="slug"
-                      sortField={sortField}
-                      onSort={handleSort}
-                    >
-                      {t('SLUG')}
-                    </SortButton>
+                  {t('SLUG')}
                   </TableHead>
 
                   <TableHead className="min-w-[100px] h-12">
-                    <SortButton<UserType>
-                      field="createdAt"
-                      sortField={sortField}
-                      onSort={handleSort}
-                    >
-                      {t('CREATED_AT')}
-                    </SortButton>
+                  {t('CREATED_AT')}
                   </TableHead>
 
                   <TableHead className="min-w-[100px] h-12">
-                    <SortButton<UserType>
-                      field="updatedAt"
-                      sortField={sortField}
-                      onSort={handleSort}
-                    >
-                      {t('UPDATED_AT')}
-                    </SortButton>
+                  {t('UPDATED_AT')}
                   </TableHead>
                   <TableHead className="w-12 h-12">  {t('ACTIONS')}</TableHead>
                 </TableRow>

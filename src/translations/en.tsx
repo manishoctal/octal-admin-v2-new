@@ -144,7 +144,7 @@ const en: TranslationKeys = {
     TYPE: "Type",
     USER_MANAGEMENT: "User Management",
     MANAGE_USER_AND_THEIR_DETAILS: "Manager user and their details",
-    SEARCH_USER_BY_NAME_MOBILE: "Search user by name, mobile number",
+    SEARCH_USER_BY_NAME_MOBILE: "Search user by userID, name, mobile number",
     USER_ID: "User ID",
     GENDER: "Gender",
     KYC_STATUS: "KYC Status",

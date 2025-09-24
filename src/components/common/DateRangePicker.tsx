@@ -4,6 +4,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import { CalendarIcon } from 'lucide-react';
 import { cn } from '../ui/utils';
+import helpers from '@/utils/helpers';
+import { useSettings } from '../SettingsContext';
 
 interface DateRange {
   from: Date | undefined;
@@ -26,11 +28,11 @@ export function DateRangePicker({
   maxDate
 }: DateRangePickerProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-
+  const {settings}=useSettings()
   const formatDateRange = (range: DateRange) => {
     if (!range.from) return placeholder;
-    if (!range.to) return `${range.from.toLocaleDateString()} - ...`;
-    return `${range.from.toLocaleDateString()} - ${range.to.toLocaleDateString()}`;
+    if (!range.to) return `${helpers.showFormattedDate(range?.from?.toLocaleDateString(), `${settings?.dateFormat}`)} - ...`;
+    return `${helpers.showFormattedDate(range?.from?.toLocaleDateString(), `${settings?.dateFormat}`)} - ${helpers.showFormattedDate(range?.to?.toLocaleDateString(), `${settings?.dateFormat}`)}`;
   };
 
   const handleSelect = (range: DateRange | undefined) => {

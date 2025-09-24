@@ -367,7 +367,7 @@ export function NotificationForm({ loadNotifications, onCancel, users }: Notific
                 <Label htmlFor="message" className="text-sm font-medium">
                     Notification Description <span className='text-red-500'>*</span>
                 </Label>
-                <div className="border rounded-lg overflow-hidden">
+                <div className="border rounded-lg overflow-hidden "> 
                     <ReactQuill
                         value={formData?.message}
                         onChange={(value) => {

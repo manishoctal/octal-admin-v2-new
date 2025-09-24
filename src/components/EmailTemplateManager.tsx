@@ -281,7 +281,7 @@ export function EmailTemplateManager() {
 
                       <TableCell className="py-4">
                         <div className="space-y-1">
-                          <div className="font-medium text-sm leading-none">{subadmin?.subject}</div>
+                          <div className="font-medium text-sm leading-none truncate max-w-[450px]">{subadmin?.subject}</div>
                         </div>
                       </TableCell>
 
