@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent } from './ui/card';
 import {
   Users,
   CreditCard,
@@ -15,7 +14,7 @@ import {
 } from 'lucide-react';
 import { AnimatedCounter } from './common/AnimatedCounter';
 import { useSettings } from './SettingsContext';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 import { apiGet } from '@/utils/apiFetch';
 import apiPath from '@/utils/apiPath';
 import helpers from '@/utils/helpers';
@@ -24,6 +23,16 @@ import { useTranslation } from './TranslationContext';
 import { Button } from './ui/button';
 import { SuccessToastMessage } from './common/sonner';
 import { useNavigate } from 'react-router-dom';
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,
+} from './ui/card';
+
 
 // Mock data for dashboard metrics
 const generateDashboardData = () => {
@@ -101,7 +110,7 @@ export function DashboardOverview() {
   const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
   const { t } = useTranslation()
 
-const navigate=useNavigate()
+  const navigate = useNavigate()
   const hasActiveFilters = dateRange?.from || dateRange?.to;
 
   const getDashboardData = async () => {
@@ -133,7 +142,7 @@ const navigate=useNavigate()
 
   useEffect(() => {
     getDashboardData()
-  
+
   }, [dateRange]);
 
   // Helper function to safely get numeric values
@@ -251,7 +260,7 @@ const navigate=useNavigate()
                     value={safeValue(dashboardData.totalUsers)}
                     duration={getAnimationDuration()}
                   />
-                  
+
                 </div>
 
               </div>
@@ -400,7 +409,7 @@ const navigate=useNavigate()
                   {settings?.currencySymbol}
                 </span>
               </div>
-              
+
             </div>
           </CardContent>
         </Card>
@@ -538,3 +547,7 @@ const navigate=useNavigate()
     </div>
   );
 }
+
+
+
+

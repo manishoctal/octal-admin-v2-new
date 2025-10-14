@@ -16,6 +16,7 @@ export interface Role {
 // Define available modules and their actions
 export const MODULES = {
   DASHBOARD: 'dashboard',
+  UI_COMPONENTS_PREVIEW:'ui_components_preview',
   USERS: 'users',
   // CIRCLES: 'circles',
   // EVENTS: 'events',
@@ -63,6 +64,7 @@ export const MODULE_ACTIONS: Record<string, (keyof typeof ACTIONS)[]> = {
   faqs: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
   settings: ['VIEW', 'EDIT'],
   change_password: ['EDIT'],
+  ui_components_preview:['VIEW']
 };
 
 
@@ -92,7 +94,8 @@ export const ROLES: Record<string, Role> = {
       { module: MODULES.PROFILE, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
       { module: MODULES.EMAIL_TEMPLATE, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
       { module: MODULES.STATIC_CONTENT, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
-      { module: MODULES.FAQ, actions: [ACTIONS.VIEW, ACTIONS.EDIT, ACTIONS.DELETE, ACTIONS.CREATE] }
+      { module: MODULES.FAQ, actions: [ACTIONS.VIEW, ACTIONS.EDIT, ACTIONS.DELETE, ACTIONS.CREATE] },
+       { module: MODULES.UI_COMPONENTS_PREVIEW, actions: [ACTIONS.VIEW] },
     ]
   },
   SUBADMIN: {
@@ -125,6 +128,7 @@ export const MODULE_LABELS = {
   [MODULES.PAYMENTS]: 'Payments Tracking',
   [MODULES.ORDERS]: 'Orders Management',
   [MODULES.ANALYTICS]: 'Analytics & Reports',
+  [MODULES.UI_COMPONENTS_PREVIEW]: 'UI Components Preview',
 
 };
 
@@ -225,7 +229,8 @@ export function PermissionProvider({ children }: PermissionProviderProps) {
       'static-content': MODULES.STATIC_CONTENT,
       'email-template': MODULES.EMAIL_TEMPLATE,
       'settings': MODULES.SETTINGS,
-      'change-password': MODULES.CHANGE_PASSWORD
+      'change-password': MODULES.CHANGE_PASSWORD,
+      'ui_components_preview': MODULES.UI_COMPONENTS_PREVIEW,
     };
 
     const baseRoute = route.split('/')[0];

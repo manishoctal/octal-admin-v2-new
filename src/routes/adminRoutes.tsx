@@ -37,7 +37,7 @@ import { NotificationManager } from '@/components/NotificationManager';
 import { ReportManager } from '@/components/ReportManager';
 import { SecretCrushManager } from '@/components/SecretCrush';
 import { ErrorLogsManager } from '@/components/ErrorLogsManager';
-
+ import { UiComponentPreview } from '@/components/CommonUiOverview';
 
 const AdminRoutes = {
     path: "/",
@@ -137,6 +137,9 @@ const AdminRoutes = {
 
         //  FAQS
         { path: 'faqs', element: <ProtectedModuleRoute route="faqs"><FAQManager /></ProtectedModuleRoute> },
+        //  UI Components Preview
+         { path: 'ui-components-preview', element: <ProtectedModuleRoute route='ui_components_preview'><UiComponentPreview /></ProtectedModuleRoute> },
+
 
         //  email templates
         { path: 'email-template', element: <ProtectedModuleRoute route="email-template"><EmailTemplateManager /></ProtectedModuleRoute> },

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   LayoutDashboard,
   Users,
+  Component,
   Package,
   Users2,
   Calendar,
@@ -171,6 +172,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       path: 'settings',
       module: MODULES.SETTINGS
     },
+     {
+      icon: Component,
+      label: t('UI_COMPONENTS_PREVIEW'),
+      path: 'ui-components-preview',
+      module: MODULES.UI_COMPONENTS_PREVIEW
+    },
   ];
 
   // Filter menu items based on user permissions
@@ -205,6 +212,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       type: "group",
       groupLabel: "System",
       children: ["notification-manager","error-logs", "settings"],
+    },
+     {
+      type: "item",
+      path: "ui-components-preview",
     },
 
   ];
