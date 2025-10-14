@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   LayoutDashboard,
   Users,
+  Component,
   Package,
   Users2,
   Calendar,
@@ -172,7 +173,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       module: MODULES.SETTINGS
     },
      {
-      icon: LayoutDashboard,
+      icon: Component,
       label: t('UI_COMPONENTS_PREVIEW'),
       path: 'ui-components-preview',
       module: MODULES.UI_COMPONENTS_PREVIEW
