@@ -4,7 +4,7 @@ import { UsersManager } from '../components/UsersManager';
 import { UserDetails } from '../components/UserDetails';
 import { Settings } from '../components/Settings';
 import { SubadminManager } from '../components/SubadminManager';
-import { SubadminForm } from '../components/SubadminForm';
+import  SubadminForm  from '../components/SubadminForm';
 import { SubadminDetails } from '../components/SubadminDetails';
 import { ProtectedRoute } from '../components/ProtectedRoute';
 import SharedLayout from '../components/sharedLayout'
@@ -13,7 +13,7 @@ import ProtectedModuleRoute from './protectedRoutes';
 import { ChangePassword } from '@/components/ChangePassword';
 import { Profile } from '@/components/Profile';
 import { StaticContentManager } from '@/components/StaticContentManager';
-import { FAQManager } from '@/components/FAQManager';
+import  FAQManager  from '@/components/FAQManager';
 import { EmailTemplateManager } from '@/components/EmailTemplateManager';
 import { EmailTemplateEditor } from '@/components/EmailTemplateEditor';
 import { StaticContentEditor } from '@/components/StaticContentEditor';

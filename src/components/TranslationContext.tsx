@@ -1,6 +1,7 @@
 import { createContext, useContext, ReactNode } from 'react';
 import { useSettings } from './SettingsContext';
 import translations from "../translations";
+import helpers from '@/utils/helpers';
 
 // Available languages
 export const availableLanguages = [
@@ -33,17 +34,16 @@ export function TranslationProvider({ children }: TranslationProviderProps) {
       let value: any = translations[currentLanguage];
       
       for (const k of keys) {
-        if (value && typeof value === 'object' && k in value) {
+        if (helpers.andCondition(helpers.andCondition(value , typeof value === 'object') , k in value)) {
           value = value[k];
         } else {
-          // Fallback to English if key not found
           value = translations.en;
           for (const fallbackKey of keys) {
-            if (value && typeof value === 'object' && fallbackKey in value) {
+            if (helpers.andCondition(helpers.andCondition(value , typeof value === 'object' ), fallbackKey in value)) {
               value = value[fallbackKey];
             } else {
               console.warn(`Translation key not found: ${key}`);
-              return key; // Return the key itself as fallback
+              return key; 
             }
           }
           break;
@@ -51,7 +51,6 @@ export function TranslationProvider({ children }: TranslationProviderProps) {
       }
       
       if (typeof value === 'string') {
-        // Replace parameters in the string
         if (params) {
           return Object.entries(params).reduce((result, [param, val]) => {
             return result.replace(new RegExp(`\\{${param}\\}`, 'g'), String(val));

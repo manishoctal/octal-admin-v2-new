@@ -121,7 +121,7 @@ const SubadminSkeleton = () => (
 );
 
 
-export function FAQManager() {
+export default function  FAQManager() {
   const { hasPermission } = usePermissions();
   const [faqs, setFaqs] = useState<FAQ[]>();
   const [loading, setLoading] = useState(false);

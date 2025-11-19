@@ -39,7 +39,7 @@ type FormValues = {
 };
 
 
-export function SubadminForm({ mode }: SubadminFormProps) {
+export default function SubadminForm({ mode }: SubadminFormProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const formValidation = FormValidation()
