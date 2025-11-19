@@ -616,7 +616,7 @@ export default function  FAQManager() {
             </DialogDescription>
           </DialogHeader>
 
-          {helpers.andCondition(selectedFAQ , (
+          {helpers.andCondition(selectedFAQ && 
             <div className="space-y-6">
               <div className="grid gap-4">
                 <div className=''>
@@ -674,7 +674,7 @@ export default function  FAQManager() {
                   </div>
                 )}
               </div>
-            </div>)
+            </div>
           )}
 
           <DialogFooter>
