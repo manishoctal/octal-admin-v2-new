@@ -606,8 +606,8 @@ export default function  FAQManager() {
         <DialogContent className="max-w-4xl max-h-[90vh]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              {isCreating ? <Plus className="w-5 h-5" /> : isEditing ? <Edit className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              {isCreating ? 'Create FAQ' : isEditing ? 'Edit FAQ' : 'Preview FAQ'}
+              {helpers.ternaryCondition(isCreating , <Plus className="w-5 h-5" /> ,helpers.ternaryCondition(isEditing , <Edit className="w-5 h-5" /> , <Eye className="w-5 h-5" />))}
+              {helpers.ternaryCondition(isCreating , 'Create FAQ' ,helpers.ternaryCondition(isEditing , 'Edit FAQ' , 'Preview FAQ'))}
             </DialogTitle>
             <DialogDescription className='text-left'>
               {isCreating ? 'Create a new frequently asked question' :
@@ -616,7 +616,7 @@ export default function  FAQManager() {
             </DialogDescription>
           </DialogHeader>
 
-          {helpers.andCondition(selectedFAQ && 
+          {selectedFAQ &&
             <div className="space-y-6">
               <div className="grid gap-4">
                 <div className=''>
@@ -624,7 +624,7 @@ export default function  FAQManager() {
                   <Input
                     id="question"
                     maxLength={100}
-                    value={selectedFAQ.question}
+                    value={selectedFAQ?.question}
                     onChange={(e) => setSelectedFAQ({
                       ...selectedFAQ,
                       question: e.target.value
@@ -675,7 +675,7 @@ export default function  FAQManager() {
                 )}
               </div>
             </div>
-          )}
+          }
 
           <DialogFooter>
             <div className="flex gap-2">
