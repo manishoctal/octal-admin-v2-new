@@ -5,7 +5,6 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { Badge } from './ui/badge';
-import { Alert, AlertDescription } from './ui/alert';
 import ConfirmDialog from './common/DeleteConfirm';
 import ConfirmStatusChange from './common/ConfirmStatusChange';
 import { User as UserType } from './AuthContext';
@@ -41,19 +40,18 @@ import {
   Eye,
   Save,
   RotateCcw,
-  AlertCircle,
   Loader2,
   GripVertical,
   MoreHorizontal,
   UserCheck,
   UserX
 } from 'lucide-react';
-import { usePermissions, MODULES, ACTIONS, PermissionGate } from './PermissionContext';
+import {  MODULES, ACTIONS, PermissionGate } from './PermissionContext';
 import SortButton from './common/SortButton';
 import { useTranslation } from './TranslationContext';
 import { showFormattedDate } from './common/showFormattedDate';
 import helpers from '@/utils/helpers';
-import { apiDelete, apiGet, apiPost, apiPut } from '@/utils/apiFetch';
+import { apiDelete, apiGet, apiPost } from '@/utils/apiFetch';
 import apiPath from '@/utils/apiPath';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { DateRangePicker } from './common/DateRangePicker';
@@ -77,15 +75,6 @@ interface FAQ {
   updatedAt: string;
   createdBy: string;
   updatedBy: string;
-}
-
-interface FAQCategory {
-  id: string;
-  name: string;
-  description: string;
-  color: string;
-  isActive: boolean;
-  sequence: number;
 }
 
 
@@ -121,8 +110,7 @@ const SubadminSkeleton = () => (
 );
 
 
-export function FAQManager() {
-  const { hasPermission } = usePermissions();
+export default function  FAQManager() {
   const [faqs, setFaqs] = useState<FAQ[]>();
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -139,8 +127,6 @@ export function FAQManager() {
   const [pageSize, setPageSize] = useState(10);
   const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
   // Permission checks
-  const canView = hasPermission(MODULES.FAQ, ACTIONS.VIEW);
-
   useEffect(() => {
     loadSubadmins();
   }, [sortDirection, sortField, statusFilter, searchTerm, pageSize, dateRange, currentPage]);
@@ -182,19 +168,7 @@ export function FAQManager() {
     }
   };
   const { t } = useTranslation()
-  if (!canView) {
-    return (
-      <div className="p-6">
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
-            You don't have permission to view FAQs.
-          </AlertDescription>
-        </Alert>
-      </div>
-    );
-  }
-
+  
   const handleResetFilters = () => {
     setSearchTerm('');
     setStatusFilter('');
@@ -512,11 +486,11 @@ export function FAQManager() {
 
               <TableBody>
 
-                {loading ? (
+                {helpers.ternaryCondition(loading , (
                   Array.from({ length: pageSize }).map((_, i) => (
                     <SubadminSkeleton key={i} />
                   ))
-                ) :
+                ) ,
                   helpers.ternaryCondition(filteredFAQs?.length > 0,
                     filteredFAQs?.map((faq, index) => (
                       <TableRow
@@ -617,14 +591,12 @@ export function FAQManager() {
                         </TableCell>
 
                       </TableRow>
-                    )), <NoResultFound />)}
+                    )), <NoResultFound />))}
               </TableBody>
             </Table>
           </div>
 
           {helpers.andCondition(filteredFAQs?.length > 0, <Pagination currentPage={currentPage} pageSize={pageSize} length={faqs?.totalDocs} setPageSize={setPageSize} setCurrentPage={setCurrentPage} totalPages={faqs?.totalPages} />)}
-
-
 
         </CardContent>
       </Card>
@@ -634,8 +606,8 @@ export function FAQManager() {
         <DialogContent className="max-w-4xl max-h-[90vh]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              {isCreating ? <Plus className="w-5 h-5" /> : isEditing ? <Edit className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              {isCreating ? 'Create FAQ' : isEditing ? 'Edit FAQ' : 'Preview FAQ'}
+              {helpers.ternaryCondition(isCreating , <Plus className="w-5 h-5" /> ,helpers.ternaryCondition(isEditing , <Edit className="w-5 h-5" /> , <Eye className="w-5 h-5" />))}
+              {helpers.ternaryCondition(isCreating , 'Create FAQ' ,helpers.ternaryCondition(isEditing , 'Edit FAQ' , 'Preview FAQ'))}
             </DialogTitle>
             <DialogDescription className='text-left'>
               {isCreating ? 'Create a new frequently asked question' :
@@ -644,7 +616,7 @@ export function FAQManager() {
             </DialogDescription>
           </DialogHeader>
 
-          {selectedFAQ && (
+          {selectedFAQ &&
             <div className="space-y-6">
               <div className="grid gap-4">
                 <div className=''>
@@ -652,7 +624,7 @@ export function FAQManager() {
                   <Input
                     id="question"
                     maxLength={100}
-                    value={selectedFAQ.question}
+                    value={selectedFAQ?.question}
                     onChange={(e) => setSelectedFAQ({
                       ...selectedFAQ,
                       question: e.target.value
@@ -703,7 +675,7 @@ export function FAQManager() {
                 )}
               </div>
             </div>
-          )}
+          }
 
           <DialogFooter>
             <div className="flex gap-2">
