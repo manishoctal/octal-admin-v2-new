@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Checkbox } from './ui/checkbox';
-import { ArrowLeft, Save, X, Shield } from 'lucide-react';
+import { ArrowLeft, Save, X } from 'lucide-react';
 import { toast } from "sonner";
 import { useTranslation } from './TranslationContext';
-import { usePermissions, MODULES, ACTIONS, ROLES, MODULE_LABELS, ACTION_LABELS, MODULE_ACTIONS } from './PermissionContext';
-import { subadminAPI, User as UserType } from './AuthContext';
+import { MODULES, ACTIONS, MODULE_LABELS, ACTION_LABELS, MODULE_ACTIONS } from './PermissionContext';
+import { subadminAPI, } from './AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FormValidation from '@/utils/formValidation';
 import SharedField from '@/components/common/SharedField'
@@ -91,39 +91,77 @@ export default function SubadminForm({ mode }: SubadminFormProps) {
   }, [mode, subadminId]);
 
 
+  // const handlePermissionChange = (module: string, action: string, checked: boolean) => {
+  //   const permissionKey = `${module}:${action}`;
+  //   const viewPermission = `${module}:view`;
+  //   const dependentActions = ["Add", "edit", "delete"];
+
+  //   setFormData(prev => {
+  //     let updatedPermissions = [...prev.permissions];
+  //     const exists = updatedPermissions?.includes(permissionKey);
+
+  //     if (checked) {
+  //       if (!exists) {
+  //         updatedPermissions.push(permissionKey);
+  //       }
+
+  //       if (dependentActions.includes(action) && !updatedPermissions?.includes(viewPermission)) {
+  //         updatedPermissions.push(viewPermission);
+  //       }
+  //     } else {
+  //       updatedPermissions = updatedPermissions.filter(p => p !== permissionKey);
+  //       if (action === "view") {
+  //         updatedPermissions = updatedPermissions.filter(
+  //           p => !dependentActions.some(dep => p === `${module}:${dep}`)
+  //         );
+  //       }
+  //     }
+
+  //     return {
+  //       ...prev,
+  //       permissions: updatedPermissions
+  //     };
+  //   });
+  // };
+
+
+  const removePermission = (permissions: string[], key: string) =>
+    permissions.filter(p => p !== key);
+
+  const removeDependentPermissions = (permissions: string[], module: string, deps: string[]) =>
+    permissions.filter(p => !deps.some(dep => p === `${module}:${dep}`));
+
+  const addPermission = (permissions: string[], key: string) =>
+    permissions.includes(key) ? permissions : [...permissions, key];
+
   const handlePermissionChange = (module: string, action: string, checked: boolean) => {
     const permissionKey = `${module}:${action}`;
     const viewPermission = `${module}:view`;
     const dependentActions = ["Add", "edit", "delete"];
-  
+
     setFormData(prev => {
-      let updatedPermissions = [...prev.permissions];
-      const exists = updatedPermissions?.includes(permissionKey);
-  
+      let updated = [...prev.permissions];
+
       if (checked) {
-        if (!exists) {
-          updatedPermissions.push(permissionKey);
-        }
-  
-        if (dependentActions.includes(action) && !updatedPermissions?.includes(viewPermission)) {
-          updatedPermissions.push(viewPermission);
+        updated = addPermission(updated, permissionKey);
+
+        const requiresView = dependentActions.includes(action);
+        if (requiresView) {
+          updated = addPermission(updated, viewPermission);
         }
       } else {
-        updatedPermissions = updatedPermissions.filter(p => p !== permissionKey);
-        if (action === "view") {
-          updatedPermissions = updatedPermissions.filter(
-            p => !dependentActions.some(dep => p === `${module}:${dep}`)
-          );
+        updated = removePermission(updated, permissionKey);
+
+        const isView = action === "view";
+        if (isView) {
+          updated = removeDependentPermissions(updated, module, dependentActions);
         }
       }
-  
-      return {
-        ...prev,
-        permissions: updatedPermissions
-      };
+
+      return { ...prev, permissions: updated };
     });
   };
-  
+
 
 
   const hasModulePermission = (module: string, action: string): boolean => {
@@ -319,7 +357,7 @@ export default function SubadminForm({ mode }: SubadminFormProps) {
                     <th className="px-4 py-2 text-left">Module</th>
                     {Object.values(ACTIONS).map((action) => (
                       <th key={action} className="px-4 py-2 text-center w-[250px]">
-                        {ACTION_LABELS[action]=='Edit'?ACTION_LABELS[action]+' / Update Status':ACTION_LABELS[action]}
+                        {ACTION_LABELS[action] == 'Edit' ? ACTION_LABELS[action] + ' / Update Status' : ACTION_LABELS[action]}
                       </th>
                     ))}
                     <th className="px-4 py-2 text-center">All</th>
@@ -327,7 +365,7 @@ export default function SubadminForm({ mode }: SubadminFormProps) {
                 </thead>
                 <tbody>
                   {Object.entries(MODULES).map(([key, module]) => {
-                    if ((module === MODULES.SUBADMINS||module === MODULES.ERROR_LOGS) && formData.role !== "subadmin") {
+                    if ((module === MODULES.SUBADMINS || module === MODULES.ERROR_LOGS) && formData.role !== "subadmin") {
                       return null;
                     }
                     const allowedActions = MODULE_ACTIONS[module] || [];
@@ -347,7 +385,7 @@ export default function SubadminForm({ mode }: SubadminFormProps) {
                                 }
                               />
                             ) : (
-                              "-" 
+                              "-"
                             )}
                           </td>
                         ))}
@@ -385,7 +423,7 @@ export default function SubadminForm({ mode }: SubadminFormProps) {
             <X className="w-4 h-4 mr-2" />
             {t('CANCEL')}
           </Button>
-          
+
           <Button type="submit" disabled={loading}>
             <Save className="w-4 h-4 mr-2" />
             {loading ? t('SAVING') : mode == 'add' ? t('CREATE_SUBADMIN') : t('UPDATE_SUBADMIN')}
