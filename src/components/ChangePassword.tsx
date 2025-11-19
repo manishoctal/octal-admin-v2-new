@@ -268,10 +268,8 @@ export function ChangePassword() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Password strength:</span>
-                      <span className={`font-medium ${passwordStrength < 30 ? 'text-red-600' :
-                        passwordStrength < 60 ? 'text-yellow-600' :
-                          passwordStrength < 80 ? 'text-blue-600' : 'text-green-600'
-                        }`}>
+                      <span className={`font-medium ${helpers.ternaryCondition(passwordStrength < 30 , 'text-red-600', 
+                        helpers.ternaryCondition(passwordStrength < 60 , 'text-yellow-600' ,helpers.ternaryCondition(passwordStrength < 80 , 'text-blue-600' , 'text-green-600')))}`}>
                         {getStrengthText(passwordStrength)}
                       </span>
                     </div>
