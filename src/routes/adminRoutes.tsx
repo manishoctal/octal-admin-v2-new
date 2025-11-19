@@ -72,56 +72,11 @@ const AdminRoutes = {
         { path: 'users', element: <ProtectedModuleRoute route="users"><UsersManager /></ProtectedModuleRoute> },
         { path: 'users/view', element: <ProtectedModuleRoute route="users"><UserDetails /></ProtectedModuleRoute> },
 
-        // Products
-        { path: 'products', element: <ProtectedModuleRoute route="products"><ProductsManager /></ProtectedModuleRoute> },
-        { path: 'products/create', element: <ProtectedModuleRoute route="products"><ProductForm mode="create" /></ProtectedModuleRoute> },
-        { path: 'products/:productId/edit', element: <ProtectedModuleRoute route="products"><ProductForm mode="edit" /></ProtectedModuleRoute> },
-        { path: 'products/:productId/view', element: <ProtectedModuleRoute route="products"><ProductDetails /></ProtectedModuleRoute> },
-        { path: 'products/:productId', element: <ProtectedModuleRoute route="products"><ProductDetails /></ProtectedModuleRoute> },
-
-        // Circles
-        { path: 'circles', element: <ProtectedModuleRoute route="circles"><CirclesManager /></ProtectedModuleRoute> },
-        { path: 'circles/create', element: <ProtectedModuleRoute route="circles"><CircleForm mode="create" /></ProtectedModuleRoute> },
-        { path: 'circles/edit', element: <ProtectedModuleRoute route="circles"><CircleForm mode="edit" /></ProtectedModuleRoute> },
-        { path: 'circles/view', element: <ProtectedModuleRoute route="circles"><CircleForm mode="view" /></ProtectedModuleRoute> },
-
-        // Events
-        { path: 'events', element: <ProtectedModuleRoute route="events"><EventsManager /></ProtectedModuleRoute> },
-        { path: 'events/create', element: <ProtectedModuleRoute route="events"><EventForm mode="create" /></ProtectedModuleRoute> },
-        { path: 'events/edit', element: <ProtectedModuleRoute route="events"><EventForm mode="edit" /></ProtectedModuleRoute> },
-        { path: 'events/view', element: <ProtectedModuleRoute route="events"><EventForm mode="view" /></ProtectedModuleRoute> },
-
-        // Intentions
-        { path: 'intentions', element: <ProtectedModuleRoute route="intentions"><IntentionsManager /></ProtectedModuleRoute> },
-        { path: 'intentions/create', element: <ProtectedModuleRoute route="intentions"><IntentionForm mode="create" /></ProtectedModuleRoute> },
-        { path: 'intentions/edit', element: <ProtectedModuleRoute route="intentions"><IntentionForm mode="edit" /></ProtectedModuleRoute> },
-        { path: 'intentions/view', element: <ProtectedModuleRoute route="intentions"><IntentionForm mode="view" /></ProtectedModuleRoute> },
-
-        // Payments
-        { path: 'payments', element: <ProtectedModuleRoute route="payments"><PaymentsManager /></ProtectedModuleRoute> },
-
         // Subadmins
         { path: 'subadmins', element: <ProtectedModuleRoute route="subadmins"><SubadminManager /></ProtectedModuleRoute> },
         { path: 'subadmins/create', element: <ProtectedModuleRoute route="subadmins"><SubadminForm mode="add" /></ProtectedModuleRoute> },
         { path: 'subadmins/edit', element: <ProtectedModuleRoute route="subadmins"><SubadminForm mode="edit" /></ProtectedModuleRoute> },
         { path: 'subadmins/view', element: <ProtectedModuleRoute route="subadmins"><SubadminDetails mode="view" /></ProtectedModuleRoute> },
-
-
-        // Virtual Gifts Routes
-
-        { path: 'virtual-gifts', element: <ProtectedModuleRoute route="virtual-gifts"><VirtualGiftsManager /></ProtectedModuleRoute> },
-        { path: 'virtual-gifts/create', element: <ProtectedModuleRoute route="virtual-gifts"><VirtualGiftForm mode="create" /></ProtectedModuleRoute> },
-        { path: 'virtual-gifts/:giftId/edit', element: <ProtectedModuleRoute route="virtual-gifts"><VirtualGiftForm mode="edit" /></ProtectedModuleRoute> },
-        { path: 'virtual-gifts/:giftId/view', element: <ProtectedModuleRoute route="virtual-gifts"><VirtualGiftDetails /></ProtectedModuleRoute> },
-        { path: 'virtual-gifts/:giftId', element: <ProtectedModuleRoute route="virtual-gifts"><VirtualGiftDetails /></ProtectedModuleRoute> },
-
-
-        // Orders 
-        { path: 'orders', element: <ProtectedModuleRoute route="orders"><div className="p-4 lg:p-6"><h2 className="text-3xl font-bold mb-4">Orders Management</h2><p className="text-muted-foreground">Orders management coming soon...</p></div></ProtectedModuleRoute> },
-
-        // Analytics 
-        { path: 'analytics', element: <ProtectedModuleRoute route="analytics"><div className="p-4 lg:p-6"><h2 className="text-3xl font-bold mb-4">Analytics</h2><p className="text-muted-foreground">Advanced analytics coming soon...</p></div></ProtectedModuleRoute> },
-
         // Settings
         { path: 'settings', element: <ProtectedModuleRoute route="settings"><Settings /></ProtectedModuleRoute> },
 
@@ -147,11 +102,6 @@ const AdminRoutes = {
         { path: 'email-template/view', element: <ProtectedModuleRoute route="email-template"><EmailTemplateEditor /></ProtectedModuleRoute> },
 
         { path: 'reports', element: <ProtectedModuleRoute route="reports"><ReportManager /></ProtectedModuleRoute> },
-
-        // secret crush 
-        { path: 'secret-crush', element: <ProtectedModuleRoute route="secret-crush"><SecretCrushManager /></ProtectedModuleRoute> },
-
-         // secret crush 
          { path: 'error-logs', element: <ProtectedModuleRoute route="error-logs"><ErrorLogsManager /></ProtectedModuleRoute> },
     ],
 }
