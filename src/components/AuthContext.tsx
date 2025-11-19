@@ -1,6 +1,6 @@
 import { apiDelete, apiGet, apiPost, apiPut } from '@/utils/apiFetch';
 import apiPath from '@/utils/apiPath';
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import { ErrorToastMessage, SuccessToastMessage } from './common/sonner';
@@ -202,15 +202,20 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
 
   const isAuthenticated = !!user;
 
-  return (
-    <AuthContext.Provider value={{
+
+  const authValue = useMemo(() => ({
       user,
       isAuthenticated,
       login,
       logout,
       updateUser,
-      isLoading
-    }}>
+      isLoading,
+    }),
+    [user, isAuthenticated, login, logout, updateUser, isLoading]
+  );
+
+  return (
+    <AuthContext.Provider value={authValue}>
       {children}
     </AuthContext.Provider>
   );
@@ -277,24 +282,6 @@ export const subadminAPI = {
       ErrorToastMessage({ message: error?.response?.data?.message });
     }
   },
-
-
-
-  // updateSubadmin: async (id: string, updates: Partial<User>): Promise<User> => {
-  //   // Simulate API call
-  //   try {
-  //     const response = await apiPut(apiPath.changeStatus + `/${id}`, updates);
-  //     if (response?.data?.results) {
-  //       SuccessToastMessage({ message: response?.data?.message });
-  //       return response
-
-  //     }
-  //     ErrorToastMessage({ message: response?.data?.message });
-  //     return response
-  //   } catch (error: any) {
-  //     console.error('Error changing status:', error);
-  //   }
-  // },
 
   deleteSubadmin: async (id: string): Promise<void> => {
     try {
