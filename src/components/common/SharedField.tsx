@@ -38,10 +38,12 @@ const FormField = ({
     name,
     icon,...rest
 }: FormFieldProps) => {
+
+
+
+    const [showPassword, setShowPassword] = useState(false);
     const renderInput = () => {
         const baseClasses = `${icon ? "pl-10" : ""} ${error?.[name] ? "border-destructive focus-visible:ring-destructive/20" : ""}`;
-
-        const [showPassword, setShowPassword] = useState(false);
 
 
         switch (type) {

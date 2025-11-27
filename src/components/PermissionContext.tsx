@@ -157,7 +157,7 @@ export function PermissionProvider({ children }: PermissionProviderProps) {
     if (!user) return null;
 
     const formatted = user?.permission?.reduce((acc, perm) => {
-      const [module, action] =perm ? perm?.split(":") : ["", ""];
+      const [module, action] = perm?.split(":");
 
       let moduleObj = acc?.find(item => item?.module === module);
       if (!moduleObj) {

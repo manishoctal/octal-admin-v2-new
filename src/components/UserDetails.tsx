@@ -26,13 +26,9 @@ interface User {
   avatar?: string;
 }
 
-interface UserDetailsProps {
-  userId: string;
-}
 
 
-
-export function UserDetails({ }: UserDetailsProps) {
+export function UserDetails() {
   const location = useLocation()
   const userId = location?.state
 

@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Separator } from './ui/separator';
-import { ArrowLeft, Edit, Trash2, Shield, Calendar, Mail, User, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowLeft, Edit, Shield, Calendar, Mail, CheckCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from './ui/alert-dialog';
 import { toast } from "sonner";
-import { useSettings } from './SettingsContext';
-import { usePermissions, PermissionGate, MODULES, ACTIONS, ROLES, MODULE_LABELS, ACTION_LABELS } from './PermissionContext';
+import { usePermissions, PermissionGate, MODULES, ACTIONS, MODULE_LABELS, ACTION_LABELS } from './PermissionContext';
 import { subadminAPI, User as UserType } from './AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { showFormattedDate } from './common/showFormattedDate';
 
-interface SubadminDetailsProps {
-  subadminId: string;
-}
 
-export function SubadminDetails({ }: SubadminDetailsProps) {
+export function SubadminDetails() {
   const navigate = useNavigate();
   const location=useLocation()
   const subadminId=location?.state
-  const { formatDate } = useSettings();
   const { hasPermission } = usePermissions();
   const [subadmin, setSubadmin] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
