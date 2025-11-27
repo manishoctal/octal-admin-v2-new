@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -11,12 +11,13 @@ import { usePermissions, PermissionGate, MODULES, ACTIONS, MODULE_LABELS, ACTION
 import { subadminAPI, User as UserType } from './AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { showFormattedDate } from './common/showFormattedDate';
+import helpers from '@/utils/helpers';
 
 
 export function SubadminDetails() {
   const navigate = useNavigate();
-  const location=useLocation()
-  const subadminId=location?.state
+  const location = useLocation()
+  const subadminId = location?.state
   const { hasPermission } = usePermissions();
   const [subadmin, setSubadmin] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -38,7 +39,7 @@ export function SubadminDetails() {
   };
 
   const handleEdit = () => {
-    navigate(`/subadmins/edit`, { state: {...subadminId}});
+    navigate(`/subadmins/edit`, { state: { ...subadminId } });
   };
 
   const handleDelete = async () => {
@@ -57,13 +58,13 @@ export function SubadminDetails() {
     if (!subadmin?.permission) return {};
     const permissionsByModule: Record<string, string[]> = {};
     subadmin?.permission?.forEach(permission => {
-      const [module, action] = permission?.split(':');
+      const [module, action] = helpers.ternaryCondition(permission, permission?.split(':'), '');
       if (!permissionsByModule[module]) {
         permissionsByModule[module] = [];
       }
       permissionsByModule[module]?.push(action);
     });
-    
+
     return permissionsByModule;
   };
 
@@ -123,7 +124,7 @@ export function SubadminDetails() {
     <div className="p-4 lg:p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={()=>{navigate(-1)}}>
+          <Button variant="ghost" size="icon" onClick={() => { navigate(-1) }}>
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div>
@@ -133,13 +134,13 @@ export function SubadminDetails() {
         </div>
         <div className="flex gap-2">
           <PermissionGate module={MODULES.SUBADMINS} action={ACTIONS.EDIT}>
-           
+
             <Button onClick={handleEdit}>
               <Edit className="w-4 h-4 mr-2" />
               Edit
             </Button>
           </PermissionGate>
-         
+
         </div>
       </div>
 
@@ -161,7 +162,7 @@ export function SubadminDetails() {
                 <div className="text-center space-y-2">
                   <h3 className="text-xl font-semibold">{subadmin.name}</h3>
                   <div className="flex flex-col items-center gap-2">
-                   
+
                     <Badge variant={getStatusColor(subadmin?.status)} className="font-medium">
                       {subadmin?.status === 'active' ? 'Active' : 'Inactive'}
                     </Badge>
@@ -180,7 +181,7 @@ export function SubadminDetails() {
                   </div>
                 </div>
 
-                
+
 
                 <div className="flex items-center gap-3">
                   <Calendar className="w-4 h-4 text-muted-foreground" />
@@ -188,7 +189,7 @@ export function SubadminDetails() {
                     <p className="text-sm text-muted-foreground">Created</p>
                     <p className="font-medium">
                       {subadmin.createdAt ? showFormattedDate(subadmin?.createdAt) : 'Unknown'}
-                    
+
                     </p>
                   </div>
                 </div>
@@ -233,9 +234,9 @@ export function SubadminDetails() {
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {actions.map(action => (
-                          <Badge 
-                            key={action} 
-                            variant="outline" 
+                          <Badge
+                            key={action}
+                            variant="outline"
                             className="bg-green-50 border-green-200 text-green-700 dark:bg-green-950 dark:border-green-800 dark:text-green-300"
                           >
                             <CheckCircle className="w-3 h-3 mr-1" />
@@ -281,13 +282,13 @@ export function SubadminDetails() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Subadmin</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete <strong>{subadmin.name}</strong>? 
+              Are you sure you want to delete <strong>{subadmin.name}</strong>?
               This action cannot be undone and will permanently remove their access to the system.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >

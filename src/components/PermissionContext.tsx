@@ -1,5 +1,6 @@
 import { createContext, useContext, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
+import helpers from '@/utils/helpers';
 
 export interface Permission {
   module: string;
@@ -157,7 +158,7 @@ export function PermissionProvider({ children }: PermissionProviderProps) {
     if (!user) return null;
 
     const formatted = user?.permission?.reduce((acc, perm) => {
-      const [module, action] = perm?.split(":");
+      const [module, action] =helpers.ternaryCondition(perm,perm?.split(":"),'');
 
       let moduleObj = acc?.find(item => item?.module === module);
       if (!moduleObj) {
