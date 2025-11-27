@@ -18,12 +18,7 @@ export const MODULES = {
   DASHBOARD: 'dashboard',
   UI_COMPONENTS_PREVIEW:'ui_components_preview',
   USERS: 'users',
-  // CIRCLES: 'circles',
-  // EVENTS: 'events',
-  // INTENTIONS: 'intentions',
   SUBADMINS: 'subadmins',
-
-  // SECRET_CRUSH: "secret_crush",
   REPORTS: "reports",
   EMAIL_TEMPLATE: 'email_template',
   STATIC_CONTENT: "static_content",
@@ -162,7 +157,7 @@ export function PermissionProvider({ children }: PermissionProviderProps) {
     if (!user) return null;
 
     const formatted = user?.permission?.reduce((acc, perm) => {
-      const [module, action] = perm?.split(":");
+      const [module, action] =perm ? perm?.split(":") : ["", ""];
 
       let moduleObj = acc?.find(item => item?.module === module);
       if (!moduleObj) {
