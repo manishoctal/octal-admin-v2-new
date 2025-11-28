@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -17,7 +17,7 @@ interface PasswordResetProps {
   token: string;
 }
 
-export function PasswordReset({ token }: PasswordResetProps) {
+export function PasswordReset({ token }: Readonly<PasswordResetProps>) {
   const params = useParams()
   token = params?.token
   const navigate = useNavigate();
@@ -27,8 +27,6 @@ export function PasswordReset({ token }: PasswordResetProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [validatingToken, setValidatingToken] = useState(true);
-  const [tokenValid, setTokenValid] = useState(false);
   const [error, setError] = useState('');
   const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
 

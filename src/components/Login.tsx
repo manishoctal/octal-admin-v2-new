@@ -35,7 +35,7 @@ export function Login() {
     register,
     reset,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {},
   });
@@ -46,10 +46,10 @@ export function Login() {
   }, [settings.siteName]);
 
   const [rememberMe, setRememberMe] = useState(
-    window?.localStorage.getItem("rememberMe") == 'true'
+    localStorage.getItem("rememberMe") == 'true'
   );
   const handleRememberMe = (e) => {
-    window?.localStorage.setItem("rememberMe", e);
+    localStorage.setItem("rememberMe", e);
     setRememberMe(e);
   };
 
@@ -76,8 +76,8 @@ export function Login() {
   useEffect(() => {
     if (rememberMe) {
       reset({
-        email: window?.localStorage.getItem("email"),
-        password: window?.localStorage.getItem("password"),
+        email: localStorage.getItem("email"),
+        password: localStorage.getItem("password"),
       });
     }
   }, []);
@@ -87,11 +87,11 @@ export function Login() {
     try {
 
       if (rememberMe) {
-        window?.localStorage.setItem("email", e?.email);
-        window?.localStorage.setItem("password", e?.password);
+        localStorage.setItem("email", e?.email);
+        localStorage.setItem("password", e?.password);
       } else {
-        window?.localStorage.removeItem("email");
-        window?.localStorage.removeItem("password");
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
       }
       const result = await login(e?.email, e?.password);
       if (result?.success) {

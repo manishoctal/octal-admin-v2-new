@@ -101,6 +101,7 @@ export function ErrorLogsManager() {
                 setSubadmins(resp?.data?.results);
             }
         } catch (error) {
+            console.error("Error while loading logs:", error);
             ErrorToastMessage({ message: 'Failed to load error logs' })
         } finally {
             setLoading(false);

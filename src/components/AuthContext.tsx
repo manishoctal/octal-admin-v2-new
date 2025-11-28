@@ -104,8 +104,8 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   const navigate = useNavigate()
   const location = useLocation()
   const [user, setUser] = useState<User | null>(() =>
-    window?.localStorage.getItem('token')
-      ? jwtDecode(window?.localStorage.getItem('token'))
+    localStorage.getItem('token')
+      ? jwtDecode(localStorage.getItem('token'))
       : null
   )
   const [isLoading, setIsLoading] = useState(true);
@@ -147,10 +147,10 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
         } else {
           const token = data?.results?.token ?? null
           const refreshToken = data?.results?.refresh_token ?? null
-          window?.localStorage.setItem('token', token)
-          window?.localStorage.setItem('refresh_token', refreshToken)
+          localStorage.setItem('token', token)
+          localStorage.setItem('refresh_token', refreshToken)
           setUser(jwtDecode(token))
-          window.localStorage.setItem('pass', myCipher(password))
+          localStorage.setItem('pass', myCipher(password))
           navigate('/dashboard')
           return data
         }
@@ -169,8 +169,8 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
 
   const logout = (type) => {
     setUser(null)
-    window?.localStorage.removeItem('token')
-    window?.localStorage.removeItem('refresh_token')
+    localStorage.removeItem('token')
+    localStorage.removeItem('refresh_token')
     navigate('/login')
     if (!type) {
       SuccessToastMessage({ message: 'Logout Successfully.' })
@@ -187,8 +187,8 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
       if (res?.data?.success) {
         const token = res?.data?.results?.token ?? null
         const refreshToken = res?.data?.results?.refresh_token ?? null
-        window?.localStorage.setItem('token', token)
-        window?.localStorage.setItem('refresh_token', refreshToken)
+         localStorage.setItem('token', token)
+        localStorage.setItem('refresh_token', refreshToken)
         setUser(jwtDecode(token))
         SuccessToastMessage({ message: res?.data?.message })
 

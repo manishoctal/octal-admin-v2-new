@@ -58,11 +58,7 @@ import ConfirmDialog from './common/ConfirmStatusChange';
 import helpers from '@/utils/helpers';
 import { Accordion, AccordionItem } from './ui/accordion';
 
-interface DashboardLayoutProps {
-  children: React.ReactNode;
-}
-
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function DashboardLayout() {
   const location = useLocation();
   const currentRoute = location?.pathname;
   const navigate = useNavigate();

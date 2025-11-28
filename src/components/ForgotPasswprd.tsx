@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { Alert, AlertDescription } from './ui/alert';
 import { ArrowLeft, Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { toast } from "sonner";
 import { useSettings } from './SettingsContext';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from './TranslationContext';
@@ -21,7 +20,7 @@ export function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
-  const [error, setError] = useState('');
+  const [error] = useState('');
   const { t } = useTranslation();
   const formValidation = FormValidation()
   type FormValues = {
@@ -29,7 +28,6 @@ export function ForgotPassword() {
   };
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({

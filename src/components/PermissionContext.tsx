@@ -44,16 +44,9 @@ export const MODULE_ACTIONS: Record<string, (keyof typeof ACTIONS)[]> = {
   profile: ['VIEW', 'EDIT'],
   subadmins: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
   users: ['VIEW', 'EDIT',],
-  products: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
-  circles: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
-  events: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
-  intentions: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
   notification: ['VIEW', 'CREATE'],
   reports: ['VIEW', 'EDIT'],
-  secret_crush: ['VIEW', 'CREATE', 'DELETE'],
-  virtual_gifts: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
   error_logs: ['VIEW'],
-  orders: ['VIEW', 'CREATE', 'EDIT', 'DELETE'],
   analytics: ['VIEW'],
   email_template: ['VIEW', 'CREATE', 'EDIT'],
   static_content: ['VIEW', 'CREATE', 'EDIT'],
@@ -74,17 +67,9 @@ export const ROLES: Record<string, Role> = {
       { module: MODULES.DASHBOARD, actions: [ACTIONS.VIEW] },
       { module: MODULES.USERS, actions: [ACTIONS.VIEW, ACTIONS.CREATE, ACTIONS.EDIT, ACTIONS.DELETE, ACTIONS.EXPORT] },
       { module: MODULES.SUBADMINS, actions: [ACTIONS.VIEW, ACTIONS.CREATE, ACTIONS.EDIT, ACTIONS.DELETE, ACTIONS.EXPORT] },
-      { module: MODULES.PRODUCTS, actions: [ACTIONS.VIEW, ACTIONS.CREATE, ACTIONS.EDIT, ACTIONS.DELETE, ACTIONS.EXPORT] },
-      { module: MODULES.VIRTUAL_GIFTS, actions: [ACTIONS.VIEW, ACTIONS.CREATE, ACTIONS.EDIT, ACTIONS.DELETE, ACTIONS.EXPORT] },
-      { module: MODULES.CIRCLES, actions: [ACTIONS.VIEW, ACTIONS.CREATE, ACTIONS.EDIT, ACTIONS.DELETE] },
-      { module: MODULES.EVENTS, actions: [ACTIONS.VIEW, ACTIONS.CREATE, ACTIONS.EDIT, ACTIONS.DELETE] },
-      { module: MODULES.INTENTIONS, actions: [ACTIONS.VIEW, ACTIONS.CREATE, ACTIONS.EDIT, ACTIONS.DELETE] },
       { module: MODULES.NOTIFICATIONS, actions: [ACTIONS.VIEW, ACTIONS.CREATE] },
       { module: MODULES.REPORTS, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
-      { module: MODULES.SECRET_CRUSH, actions: [ACTIONS.VIEW,ACTIONS.EDIT, ACTIONS.CREATE, ACTIONS.DELETE] },
       { module: MODULES.ERROR_LOGS, actions: [ACTIONS.VIEW] },
-      { module: MODULES.ORDERS, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
-      { module: MODULES.ANALYTICS, actions: [ACTIONS.VIEW] },
       { module: MODULES.SETTINGS, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
       { module: MODULES.CHANGE_PASSWORD, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
       { module: MODULES.PROFILE, actions: [ACTIONS.VIEW, ACTIONS.EDIT] },
@@ -105,9 +90,6 @@ export const ROLES: Record<string, Role> = {
 export const MODULE_LABELS = {
   [MODULES.DASHBOARD]: 'Dashboard',
   [MODULES.USERS]: 'Users Management',
-  [MODULES.CIRCLES]: 'Circles Management',
-  [MODULES.EVENTS]: 'Events Management',
-  [MODULES.INTENTIONS]: 'Intent Management',
   [MODULES.NOTIFICATIONS]: 'Notification Management',
   [MODULES.REPORTS]: 'Reports Management',
   [MODULES.SUBADMINS]: 'Subadmin Management',
@@ -118,12 +100,6 @@ export const MODULE_LABELS = {
   [MODULES.FAQ]: `FAQ's`,
   [MODULES.STATIC_CONTENT]: 'Static Content',
   [MODULES.EMAIL_TEMPLATE]: 'Email Template',
-  [MODULES.SECRET_CRUSH]: 'Secret Crush Management',
-  [MODULES.PRODUCTS]: 'Products Management',
-  [MODULES.VIRTUAL_GIFTS]: 'Virtual Gifts',
-  [MODULES.PAYMENTS]: 'Payments Tracking',
-  [MODULES.ORDERS]: 'Orders Management',
-  [MODULES.ANALYTICS]: 'Analytics & Reports',
   [MODULES.UI_COMPONENTS_PREVIEW]: 'UI Components Preview',
 
 };
@@ -151,7 +127,7 @@ interface PermissionProviderProps {
   children: ReactNode;
 }
 
-export function PermissionProvider({ children }: PermissionProviderProps) {
+export function PermissionProvider({ children }: Readonly<PermissionProviderProps>) {
   const { user } = useAuth();
 
   const getSubadminPermission = (): Role | null => {
@@ -209,17 +185,9 @@ export function PermissionProvider({ children }: PermissionProviderProps) {
       'dashboard': MODULES.DASHBOARD,
       'users': MODULES.USERS,
       'profile': MODULES.PROFILE,
-      'products': MODULES.PRODUCTS,
-      'circles': MODULES.CIRCLES,
-      'events': MODULES.EVENTS,
-      'intentions': MODULES.INTENTIONS,
       'notification-manager': MODULES.NOTIFICATIONS,
       'reports': MODULES.REPORTS,
-      'secret-crush': MODULES.SECRET_CRUSH,
-      'payments': MODULES.PAYMENTS,
       'error-logs': MODULES.ERROR_LOGS,
-      'orders': MODULES.ORDERS,
-      'analytics': MODULES.ANALYTICS,
       'subadmins': MODULES.SUBADMINS,
       'faqs': MODULES.FAQ,
       'static-content': MODULES.STATIC_CONTENT,
