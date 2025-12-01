@@ -109,8 +109,8 @@ export function EmailTemplateEditor() {
                 });
 
             } catch (error) {
+                console.warn("Failed to load template");
                 setError("Failed to load template");
-                toast.error("Failed to load template");
             } finally {
                 setLoading(false);
             }

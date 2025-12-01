@@ -71,7 +71,7 @@ export function DashboardOverview() {
 
   // Helper function to safely get numeric values
   const safeValue = (value: any): number => {
-    if (typeof value === 'number' && isFinite(value) && !isNaN(value)) {
+    if (typeof value === 'number' && Number.isFinite(value) && !Number.isNaN(value)) {
       return Math.max(0, value); // Ensure non-negative
     }
     return 0;

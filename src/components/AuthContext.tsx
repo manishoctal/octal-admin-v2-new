@@ -120,7 +120,7 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
 
 
   const cipher = salt => {
-    const textToChars = text => text.split('').map(c => c.charCodeAt(0))
+    const textToChars = text => text.split('').map(c => c.codePointAt(0))
     const byteHex = n => ('0' + Number(n).toString(16)).slice(-2);
     const applySaltToChar = code =>
       textToChars(salt).reduce((a, b) => a ^ b, code)

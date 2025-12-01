@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import * as React from "react"; // ← add this
 import { Button } from './ui/button';
 import { Input } from "@/components/ui/input";
@@ -76,7 +75,7 @@ import {
 } from "./ui/select"
 
 import { Progress } from "./ui/progress"
-import { Popover, PopoverTrigger, PopoverContent, PopoverAnchor } from './ui/popover'
+import { Popover, PopoverTrigger, PopoverContent } from './ui/popover'
 import {
   Pagination,
   PaginationContent,
@@ -121,10 +120,6 @@ import {
 // import * as Recharts from "recharts"; // Recharts primitives
 
 
-interface DateRange {
-  from: Date | undefined;
-  to: Date | undefined;
-}
 export function UiComponentPreview() {
   const [checked, setChecked] = React.useState(true);
   const [selectedOption, setSelectedOption] = React.useState("option1");
