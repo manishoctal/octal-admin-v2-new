@@ -1,10 +1,5 @@
-import { useState, useEffect } from 'react';
 import * as React from "react"; // ← add this
-import { DateRangePicker } from './common/DateRangePicker';
-import { useTranslation } from './TranslationContext';
 import { Button } from './ui/button';
-import { SuccessToastMessage } from './common/sonner';
-import { useNavigate } from 'react-router-dom';
 import { Input } from "@/components/ui/input";
 import {
   Breadcrumb,
@@ -46,22 +41,19 @@ import {
 import { Checkbox } from './ui/checkbox';
 import {
   DropdownMenu,
-  DropdownMenuPortal,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuItem,
   DropdownMenuCheckboxItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
 } from './ui/dropdown-menu';
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip'
+import { Tooltip, TooltipTrigger, TooltipContent } from './ui/tooltip'
 import {
   Table,
   TableHeader,
@@ -70,7 +62,6 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableCaption
 } from './ui/table'
 import { Switch } from './ui/switch';
 import {
@@ -79,15 +70,12 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "./ui/select"
 
 import { Progress } from "./ui/progress"
-import { Popover, PopoverTrigger, PopoverContent, PopoverAnchor } from './ui/popover'
+import { Popover, PopoverTrigger, PopoverContent } from './ui/popover'
 import {
   Pagination,
   PaginationContent,
@@ -100,8 +88,6 @@ import {
 
 import {
   AlertDialog,
-  AlertDialogPortal,
-  AlertDialogOverlay,
   AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogHeader,
@@ -134,12 +120,7 @@ import {
 // import * as Recharts from "recharts"; // Recharts primitives
 
 
-interface DateRange {
-  from: Date | undefined;
-  to: Date | undefined;
-}
 export function UiComponentPreview() {
-  const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
   const [checked, setChecked] = React.useState(true);
   const [selectedOption, setSelectedOption] = React.useState("option1");
 

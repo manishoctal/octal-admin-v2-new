@@ -4,17 +4,10 @@ import {
   CreditCard,
   UserPlus,
   Flag,
-  UserCheck,
-  Music,
-  TrendingUp,
-  MapPin,
-  Calendar,
-  DollarSign,
   RotateCcw
 } from 'lucide-react';
 import { AnimatedCounter } from './common/AnimatedCounter';
 import { useSettings } from './SettingsContext';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 import { apiGet } from '@/utils/apiFetch';
 import apiPath from '@/utils/apiPath';
 import helpers from '@/utils/helpers';
@@ -25,79 +18,10 @@ import { SuccessToastMessage } from './common/sonner';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardAction,
-  CardDescription,
   CardContent,
 } from './ui/card';
 
 
-// Mock data for dashboard metrics
-const generateDashboardData = () => {
-  // Daily signup data for the last 7 days
-  const dailySignups = [
-    { date: 'Mon', signups: 45, day: 'Monday' },
-    { date: 'Tue', signups: 52, day: 'Tuesday' },
-    { date: 'Wed', signups: 38, day: 'Wednesday' },
-    { date: 'Thu', signups: 67, day: 'Thursday' },
-    { date: 'Fri', signups: 71, day: 'Friday' },
-    { date: 'Sat', signups: 89, day: 'Saturday' },
-    { date: 'Sun', signups: 94, day: 'Sunday' },
-  ];
-
-  // New subscribed users over time
-  const subscriptionData = [
-    { month: 'Jan', free: 1200, premium: 320, pro: 180 },
-    { month: 'Feb', free: 1350, premium: 380, pro: 220 },
-    { month: 'Mar', free: 1480, premium: 420, pro: 250 },
-    { month: 'Apr', free: 1620, premium: 470, pro: 290 },
-    { month: 'May', free: 1750, premium: 520, pro: 330 },
-    { month: 'Jun', free: 1890, premium: 580, pro: 370 },
-  ];
-
-  // Top cities by active users
-  const topCities = [
-    { city: 'New York', users: 2847, percentage: 18.2, color: '#3b82f6' },
-    { city: 'Los Angeles', users: 2156, percentage: 13.8, color: '#10b981' },
-    { city: 'Chicago', users: 1923, percentage: 12.3, color: '#f59e0b' },
-    { city: 'Houston', users: 1654, percentage: 10.6, color: '#ef4444' },
-    { city: 'Phoenix', users: 1387, percentage: 8.9, color: '#8b5cf6' },
-    { city: 'Philadelphia', users: 1245, percentage: 8.0, color: '#ec4899' },
-    { city: 'San Antonio', users: 1098, percentage: 7.0, color: '#06b6d4' },
-    { city: 'San Diego', users: 967, percentage: 6.2, color: '#84cc16' },
-    { city: 'Dallas', users: 845, percentage: 5.4, color: '#f97316' },
-    { city: 'San Jose', users: 756, percentage: 4.8, color: '#14b8a6' },
-  ];
-
-  // Ensure all numeric values are valid numbers
-  const sanitizeNumber = (value: any): number => {
-    const num = Number(value);
-    return isNaN(num) || !isFinite(num) ? 0 : num;
-  };
-
-  return {
-    // Summary metrics - ensure all values are valid numbers
-    totalUsers: sanitizeNumber(15642),
-    activeSubscriptions: sanitizeNumber(4758),
-    newSignupsToday: sanitizeNumber(94),
-    reportsFlagsToday: sanitizeNumber(12),
-    totalCircles: sanitizeNumber(1847),
-    totalPlaylists: sanitizeNumber(3256),
-
-    // Growth metrics
-    userGrowth: sanitizeNumber(12.5),
-    subscriptionGrowth: sanitizeNumber(8.3),
-    circleGrowth: sanitizeNumber(15.2),
-    playlistGrowth: sanitizeNumber(22.1),
-
-    // Charts data
-    dailySignups,
-    subscriptionData,
-    topCities,
-  };
-};
 interface DateRange {
   from: Date | undefined;
   to: Date | undefined;
@@ -106,7 +30,7 @@ export function DashboardOverview() {
   const { settings, formatCurrency } = useSettings();
 
   const [loading, setLoading] = useState(true);
-  const [dashboardData, setDashboardData] = useState<ReturnType<typeof generateDashboardData> | null>(null);
+  const [dashboardData, setDashboardData] = useState(null);
   const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
   const { t } = useTranslation()
 
@@ -147,17 +71,12 @@ export function DashboardOverview() {
 
   // Helper function to safely get numeric values
   const safeValue = (value: any): number => {
-    if (typeof value === 'number' && isFinite(value) && !isNaN(value)) {
+    if (typeof value === 'number' && Number.isFinite(value) && !Number.isNaN(value)) {
       return Math.max(0, value); // Ensure non-negative
     }
     return 0;
   };
 
-  // Helper function to safely get percentage values
-  const safePercentage = (value: any): number => {
-    const num = safeValue(value);
-    return Math.min(100, Math.max(0, num)); // Clamp between 0 and 100
-  };
 
   // Get animation duration, defaulting to 0 if animations are disabled
   const getAnimationDuration = () => {
@@ -188,19 +107,7 @@ export function DashboardOverview() {
             </Card>
           ))}
         </div>
-        {/* 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader>
-                <div className="h-6 w-48 bg-muted rounded" />
-              </CardHeader>
-              <CardContent>
-                <div className="h-64 bg-muted rounded" />
-              </CardContent>
-            </Card>
-          ))}
-        </div> */}
+       
       </div>
     );
   }
@@ -415,135 +322,7 @@ export function DashboardOverview() {
         </Card>
       </div>
 
-      {/* Charts & Graphs */}
-      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="lg:col-span-1">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calendar className="w-5 h-5" />
-              Daily Signup Graph (Last 7 Days)
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={dashboardData.dailySignups}>
-                <defs>
-                  <linearGradient id="signupGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                <XAxis 
-                  dataKey="date" 
-                  axisLine={false}
-                  tickLine={false}
-                  className="text-sm"
-                />
-                <YAxis 
-                  axisLine={false}
-                  tickLine={false}
-                  className="text-sm"
-                />
-                <Tooltip content={CustomTooltip} />
-                <Area 
-                  type="monotone" 
-                  dataKey="signups" 
-                  stroke="#3b82f6" 
-                  strokeWidth={2}
-                  fill="url(#signupGradient)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5" />
-              New Subscribed Users
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={dashboardData.subscriptionData}>
-                <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                <XAxis 
-                  dataKey="month" 
-                  axisLine={false}
-                  tickLine={false}
-                  className="text-sm"
-                />
-                <YAxis 
-                  axisLine={false}
-                  tickLine={false}
-                  className="text-sm"
-                />
-                <Tooltip content={CustomTooltip} />
-                <Legend />
-                <Bar dataKey="free" stackId="a" fill="#10b981" name="Free" />
-                <Bar dataKey="premium" stackId="a" fill="#3b82f6" name="Premium" />
-                <Bar dataKey="pro" stackId="a" fill="#8b5cf6" name="Pro" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MapPin className="w-5 h-5" />
-              Top Cities by Active Users
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="flex justify-center">
-                <ResponsiveContainer width="100%" height={320}>
-                  <PieChart>
-                    <Pie
-                      data={dashboardData.topCities}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={120}
-                      paddingAngle={2}
-                      dataKey="users"
-                    >
-                      {dashboardData.topCities.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip content={CustomTooltip} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-
-              <div className="space-y-3">
-                {dashboardData.topCities.map((city, index) => (
-                  <div key={city.city} className="flex items-center justify-between p-3 rounded-lg border">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-muted-foreground">#{index + 1}</span>
-                        <div 
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: city.color }}
-                        />
-                      </div>
-                      <span className="font-medium">{city.city}</span>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-semibold">{city.users.toLocaleString()}</div>
-                      <div className="text-sm text-muted-foreground">{city.percentage}%</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div> */}
+      
     </div>
   );
 }

@@ -8,12 +8,12 @@ import { cn } from '../ui/utils';
 import { countries, Country, searchCountries } from './countriesData';
 
 interface PhoneInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-  className?: string;
-  error?: string;
+ readonly value: string;
+ readonly onChange: (value: string) => void;
+ readonly placeholder?: string;
+ readonly disabled?: boolean;
+ readonly className?: string;
+ readonly error?: string;
 }
 
 export function PhoneInput({ 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Checkbox } from './ui/checkbox';
 import { Badge } from './ui/badge';
 import {
     Send,
@@ -28,7 +27,6 @@ interface User {
 }
 
 interface NotificationFormProps {
-    onSubmit: (data: NotificationFormData) => void;
     onCancel: () => void;
     loadNotifications: () => void;
     users: User[];
@@ -42,7 +40,7 @@ interface NotificationFormData {
 }
 
 
-export function NotificationForm({ loadNotifications, onCancel, users }: NotificationFormProps) {
+export function NotificationForm({ loadNotifications, onCancel, users }: Readonly<NotificationFormProps>) {
     const [formData, setFormData] = useState<NotificationFormData>({
         title: '',
         message: '',

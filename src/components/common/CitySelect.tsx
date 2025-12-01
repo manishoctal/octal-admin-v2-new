@@ -7,13 +7,13 @@ import { cn } from '../ui/utils';
 import { majorCities, City, searchCities, getCitiesByCountry, getCountryByCode } from './countriesData';
 
 interface CitySelectProps {
-  value: string;
-  onChange: (value: string) => void;
-  countryName?: string;
-  placeholder?: string;
-  disabled?: boolean;
-  className?: string;
-  error?: string;
+ readonly value: string;
+ readonly onChange: (value: string) => void;
+ readonly countryName?: string;
+ readonly placeholder?: string;
+ readonly disabled?: boolean;
+ readonly className?: string;
+ readonly error?: string;
 }
 
 export function CitySelect({ 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
 interface AnimatedCounterProps {
-  value: number;
-  duration?: number;
-  formatter?: (value: number) => string;
-  className?: string;
+ readonly value: number;
+ readonly duration?: number;
+ readonly formatter?: (value: number) => string;
+ readonly className?: string;
 }
 
 export function AnimatedCounter({ 
@@ -17,7 +17,7 @@ export function AnimatedCounter({
 
   // Validate and sanitize the input value
   const sanitizedValue = useMemo(() => {
-    if (typeof value !== 'number' || isNaN(value) || !isFinite(value)) {
+    if (typeof value !== 'number' || Number.isNaN(value) || !Number.isFinite(value)) {
       return 0;
     }
     return Math.max(0, value); // Ensure non-negative

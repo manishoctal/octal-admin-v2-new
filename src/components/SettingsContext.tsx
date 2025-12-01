@@ -72,7 +72,7 @@ interface SettingsContextType {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 interface SettingsProviderProps {
-  children: ReactNode;
+  readonly  children: ReactNode;
 }
 
 export function SettingsProvider({ children }: SettingsProviderProps) {

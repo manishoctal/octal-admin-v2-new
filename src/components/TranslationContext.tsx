@@ -20,7 +20,7 @@ interface TranslationContextType {
 const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
 
 interface TranslationProviderProps {
-  children: ReactNode;
+ readonly children: ReactNode;
 }
 
 export function TranslationProvider({ children }: TranslationProviderProps) {

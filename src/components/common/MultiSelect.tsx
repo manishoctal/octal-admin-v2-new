@@ -16,11 +16,11 @@ type Option = {
 };
 
 interface MultiSelectProps {
-  options: Option[];
-  value: string[];
-  onChange: (value: string[]) => void;
-  placeholder?: string;
-  disabled?: boolean;
+ readonly options: Option[];
+ readonly value: string[];
+ readonly onChange: (value: string[]) => void;
+ readonly placeholder?: string;
+ readonly disabled?: boolean;
 }
 
 export function MultiSelect({

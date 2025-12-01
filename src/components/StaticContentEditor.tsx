@@ -117,6 +117,7 @@ export function StaticContentEditor() {
                 });
 
             } catch (error) {
+                console.warn('error',error)
                 setError("Failed to load template");
                 toast.error("Failed to load template");
             } finally {
@@ -230,7 +231,7 @@ export function StaticContentEditor() {
                         {/* Available Variables */}
                         <div className="space-y-2">
                             <div className="h-6 w-2/3 bg-muted rounded animate-pulse" />
-                            {[...Array(5)].map((_, i) => (
+                            {[...new Array(5)].map((_, i) => (
                                 <div key={i} className="h-10 bg-muted rounded animate-pulse" />
                             ))}
                         </div>
@@ -238,7 +239,7 @@ export function StaticContentEditor() {
                         {/* Template Info Card */}
                         <div className="space-y-2 p-4 border rounded bg-background">
                             <div className="h-5 w-1/2 bg-muted rounded animate-pulse" />
-                            {[...Array(4)].map((_, i) => (
+                            {[...new Array(4)].map((_, i) => (
                                 <div key={i} className="h-4 w-full bg-muted rounded animate-pulse" />
                             ))}
                         </div>
