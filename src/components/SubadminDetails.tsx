@@ -32,6 +32,7 @@ export function SubadminDetails() {
       setLoading(true);
       setSubadmin(subadminId);
     } catch (error) {
+      console.error('Error loading subadmin:', error);
       navigate('/subadmins');
     } finally {
       setLoading(false);
