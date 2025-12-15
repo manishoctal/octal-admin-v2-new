@@ -31,11 +31,7 @@ export function Login() {
     register,
     reset,
     handleSubmit,
-<<<<<<< HEAD
     formState: { errors, isSubmitting, isLoading },
-=======
-    formState: { errors },
->>>>>>> ad107891e84ea9cdd1361feb4a2c8d799c11347d
   } = useForm<FormValues>({
     defaultValues: {
       email: '',
@@ -49,17 +45,9 @@ export function Login() {
     document.title = `Admin Login - ${settings.siteName}`;
   }, [settings.siteName]);
 
-<<<<<<< HEAD
   const [rememberMe, setRememberMe] = useState(window?.localStorage.getItem('rememberMe') === 'true');
   const handleRememberMe = (e: boolean) => {
     window?.localStorage.setItem('rememberMe', String(e));
-=======
-  const [rememberMe, setRememberMe] = useState(
-    localStorage.getItem("rememberMe") == 'true'
-  );
-  const handleRememberMe = (e) => {
-    localStorage.setItem("rememberMe", e);
->>>>>>> ad107891e84ea9cdd1361feb4a2c8d799c11347d
     setRememberMe(e);
   };
 
@@ -83,14 +71,9 @@ export function Login() {
   useEffect(() => {
     if (rememberMe) {
       reset({
-<<<<<<< HEAD
         email: window?.localStorage.getItem('email') ?? '',
         password: window?.localStorage.getItem('password') ?? '',
         remember: true,
-=======
-        email: localStorage.getItem("email"),
-        password: localStorage.getItem("password"),
->>>>>>> ad107891e84ea9cdd1361feb4a2c8d799c11347d
       });
     }
   }, [rememberMe, reset]);
@@ -98,22 +81,12 @@ export function Login() {
   const handleLogin = async (data: FormValues) => {
      
     try {
-<<<<<<< HEAD
       if (data.remember || rememberMe) {
         window?.localStorage.setItem('email', data.email ?? '');
         window?.localStorage.setItem('password', data.password ?? '');
       } else {
         window?.localStorage.removeItem('email');
         window?.localStorage.removeItem('password');
-=======
-
-      if (rememberMe) {
-        localStorage.setItem("email", e?.email);
-        localStorage.setItem("password", e?.password);
-      } else {
-        localStorage.removeItem("email");
-        localStorage.removeItem("password");
->>>>>>> ad107891e84ea9cdd1361feb4a2c8d799c11347d
       }
       const result = await login(data.email, data.password);
       if (result?.success) {
