@@ -1,5 +1,5 @@
 import { createContext, useContext, ReactNode } from 'react';
-import { useSettings } from './SettingsContext';
+import { useSettings } from './contexts/settings';
 import translations from "../translations";
 import helpers from '@/utils/helpers';
 

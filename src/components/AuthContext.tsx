@@ -17,6 +17,12 @@ export interface User {
   createdBy?: string;
 }
 
+export interface AuthResponse {
+  success: boolean;
+  message?: string;
+  results?: any;
+}
+
 
 export type CreateSubadminData = {
   firstName: string;
@@ -37,7 +43,7 @@ interface SubadminQueryPayload {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<AuthResponse>;
   logout: () => void;
   updateUser: (userData: Partial<User>) => void;
   isLoading: boolean;
@@ -130,7 +136,7 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   }
   const myCipher = cipher('mySecretSalt')
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<AuthResponse> => {
     setIsLoading(true);
     try {
       // Simulate API call delay
@@ -143,7 +149,7 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
           localStorage.setItem('refresh_token', refresh_token)
           setUser(jwtDecode(token))
           navigate('/change-password')
-          return data
+          return data as AuthResponse
         } else {
           const token = data?.results?.token ?? null
           const refreshToken = data?.results?.refresh_token ?? null
@@ -152,16 +158,17 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
           setUser(jwtDecode(token))
           window.localStorage.setItem('pass', myCipher(password))
           navigate('/dashboard')
-          return data
+          return data as AuthResponse
         }
 
       } else {
-        return data
+        return data as AuthResponse
       }
 
     } catch (error) {
-      ErrorToastMessage({ message: error?.response?.data?.message ?? 'Login failed' })
-      return error;
+      const message = error?.response?.data?.message ?? 'Login failed';
+      ErrorToastMessage({ message });
+      return { success: false, message } as AuthResponse;
     } finally {
       setIsLoading(false);
     }

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Alert, AlertDescription } from './ui/alert';
 import { ArrowLeft, Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { toast } from "sonner";
-import { useSettings } from './SettingsContext';
+import { useSettings } from './contexts/settings';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from './TranslationContext';
 import SharedField from '@/components/common/SharedField'

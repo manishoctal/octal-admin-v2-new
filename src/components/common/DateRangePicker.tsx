@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { CalendarIcon } from 'lucide-react';
 import { cn } from '../ui/utils';
 import helpers from '@/utils/helpers';
-import { useSettings } from '../SettingsContext';
+import { useSettings } from '../contexts/settings';
 
 interface DateRange {
   from: Date | undefined;

@@ -1,7 +1,7 @@
 import { Card, CardContent } from '../ui/card';
 import { AnimatedCounter } from './AnimatedCounter';
 import { Users, UserCheck, UserX, Wallet, UserX2 } from 'lucide-react';
-import { useSettings } from '../SettingsContext';
+import { useSettings } from '../contexts/settings';
 
 interface StatisticsData {
   totalUsers: number;

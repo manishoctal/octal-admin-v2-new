@@ -29,7 +29,7 @@ import {
   Upload,
   X
 } from 'lucide-react';
-import { useSettings, SettingsData } from './SettingsContext';
+import { useSettings, SettingsData } from './contexts/settings';
 import apiPath from '@/utils/apiPath';
 import { apiGet, apiPost, apiPut } from '@/utils/apiFetch';
 import { Controller, useForm } from "react-hook-form"

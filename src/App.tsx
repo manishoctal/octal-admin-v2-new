@@ -1,6 +1,6 @@
 
 import { Toaster } from './components/ui/sonner';
-import { SettingsProvider } from './components/SettingsContext';
+import { SettingsProvider } from './components/contexts/settings';
 import { TranslationProvider } from './components/TranslationContext';
 import { AuthProvider } from './components/AuthContext';
 import { PermissionProvider } from './components/PermissionContext';

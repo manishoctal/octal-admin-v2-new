@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Plus, Edit, Trash2, Eye, MoreHorizontal, RotateCcw, Shield, UserCheck, UserX } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from './ui/dropdown-menu';
 import { toast } from "sonner";
-import { useSettings } from './SettingsContext';
+import { useSettings } from './contexts/settings';
 import { useTranslation } from './TranslationContext';
 import { usePermissions, PermissionGate, MODULES, ACTIONS, ROLES } from './PermissionContext';
 import { subadminAPI, User as UserType } from './AuthContext';

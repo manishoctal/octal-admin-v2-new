@@ -13,7 +13,7 @@ import {
   RotateCcw
 } from 'lucide-react';
 import { AnimatedCounter } from './common/AnimatedCounter';
-import { useSettings } from './SettingsContext';
+import { useSettings } from './contexts/settings';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 import { apiGet } from '@/utils/apiFetch';
 import apiPath from '@/utils/apiPath';

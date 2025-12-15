@@ -7,7 +7,7 @@ import { Separator } from './ui/separator';
 import { ArrowLeft, Edit, Trash2, Shield, Calendar, Mail, User, CheckCircle, XCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from './ui/alert-dialog';
 import { toast } from "sonner";
-import { useSettings } from './SettingsContext';
+import { useSettings } from './contexts/settings';
 import { usePermissions, PermissionGate, MODULES, ACTIONS, ROLES, MODULE_LABELS, ACTION_LABELS } from './PermissionContext';
 import { subadminAPI, User as UserType } from './AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';

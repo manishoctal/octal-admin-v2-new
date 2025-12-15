@@ -23,6 +23,8 @@ interface FormFieldProps {
     disabled?: boolean;
     required?: boolean;
     icon?: React.ReactNode;
+    checked?: boolean;
+    onCheckedChange?: (checked: boolean) => void;
 }
 
 const FormField = ({
@@ -36,13 +38,15 @@ const FormField = ({
     disabled,
     required,
     name,
+    checked,
+    onCheckedChange,
     icon,...rest
 }: FormFieldProps) => {
-    const renderInput = () => {
-        const baseClasses = `${icon ? "pl-10" : ""} ${error?.[name] ? "border-destructive focus-visible:ring-destructive/20" : ""}`;
+     
+    const RenderInput = () => {
+        const baseClasses = `${icon ? "pl-10" : ""} ${error ? "border-destructive focus-visible:ring-destructive/20" : ""}`;
 
         const [showPassword, setShowPassword] = useState(false);
-
 
         switch (type) {
             case "textarea":
@@ -76,7 +80,7 @@ const FormField = ({
             case "checkbox":
                 return (
                     <div className="flex items-center space-x-2">
-                        <Checkbox id={id} name={name} disabled={disabled} {...registration} {...rest} />
+                        <Checkbox id={id} name={name} disabled={disabled} checked={checked} onCheckedChange={onCheckedChange} {...registration} {...rest} />
                         <Label htmlFor={id}>{label}{required && "*"}</Label>
                     </div>
                 );
@@ -152,7 +156,7 @@ const FormField = ({
     };
 
     return type === "checkbox" ? (
-        <div className="space-y-1">{renderInput()}</div>
+        <div className="space-y-1">{RenderInput()}</div>
     ) : (
         <div className="space-y-2">
             {type !== "radio" && type !== "checkbox" && (
@@ -161,8 +165,8 @@ const FormField = ({
                     {required && <span className="text-red-500">*</span>}
                 </Label>
             )}
-            {renderInput()}
-            {error?.[name] && <p className="text-sm text-destructive">{error?.[name]?.message}</p>}
+            {RenderInput()}
+            {error && <p className="text-sm text-destructive">{error?.message}</p>}
         </div>
     );
 };

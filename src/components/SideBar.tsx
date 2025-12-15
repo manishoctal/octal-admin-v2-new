@@ -64,7 +64,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
 import { TooltipProvider } from './ui/tooltip';
 import { useAuth } from './AuthContext';
-import { useSettings } from './SettingsContext';
+import { useSettings } from './contexts/settings';
 import { useTranslation } from './TranslationContext';
 import { usePermissions, MODULES } from './PermissionContext';
 import ConfirmDialog from './common/ConfirmStatusChange';
@@ -75,7 +75,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function SideBar({ children }: DashboardLayoutProps) {
   const location = useLocation();
   const currentRoute = location?.pathname;
   const navigate = useNavigate();

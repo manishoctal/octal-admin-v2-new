@@ -1,4 +1,4 @@
-import { useSettings } from '../SettingsContext';
+import { useSettings } from '../contexts/settings';
 import helpers from '@/utils/helpers';
 
 export  function showFormattedDate  (date = '') {

@@ -6,7 +6,7 @@ import { Label } from './ui/label';
 import { Alert, AlertDescription } from './ui/alert';
 import { Progress } from './ui/progress';
 import { ArrowLeft, Eye, EyeOff, CheckCircle, AlertCircle, Loader2, Shield, Key } from 'lucide-react';
-import { useSettings } from './SettingsContext';
+import { useSettings } from './contexts/settings';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiPost } from '@/utils/apiFetch';
 import apiPath from '@/utils/apiPath';

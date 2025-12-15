@@ -1,5 +1,5 @@
-import { DashboardLayout } from '../components/DashboardLayout';
-import { DashboardOverview } from '../components/DashboardOverview';
+import { SideBar } from '../components/SideBar';
+import { Dashboard } from '../pages/dashboard';
 import { UsersManager } from '../components/UsersManager';
 import { UserDetails } from '../components/UserDetails';
 import { Settings } from '../components/Settings';
@@ -29,7 +29,7 @@ const AdminRoutes = {
         <ProtectedRoute>
             <div className="min-h-screen bg-background">
                 <SharedLayout>
-                    <DashboardLayout />
+                    <SideBar />
                 </SharedLayout>
             </div>
         </ProtectedRoute>
@@ -39,7 +39,7 @@ const AdminRoutes = {
             path: 'dashboard',
             element: (
                 <ProtectedModuleRoute route="dashboard">
-                    <DashboardOverview />
+                    <Dashboard />
                 </ProtectedModuleRoute>
             ),
         },
@@ -48,7 +48,7 @@ const AdminRoutes = {
             path: '/',
             element: (
                 <ProtectedModuleRoute route="dashboard">
-                    <DashboardOverview />
+                    <Dashboard />
                 </ProtectedModuleRoute>
             ),
         },

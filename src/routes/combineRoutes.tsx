@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSettings } from '../components/SettingsContext';
+import { useSettings } from '../components/contexts/settings';
 import { useTranslation } from '../components/TranslationContext';
 import { useAuth } from '../components/AuthContext';
 import MainRoutes from './mainRoutes';
