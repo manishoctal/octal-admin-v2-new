@@ -157,7 +157,7 @@ export function Settings() {
 
 
   const uploadFile = (file: File, uploadUrl: string) => {
-    return new Promise<string>(async (resolve, reject) => {
+    return new Promise<string>( (resolve, reject) => {
       try {
         const reader = new FileReader();
         reader.readAsArrayBuffer(file);

@@ -13,11 +13,11 @@ interface DateRange {
 }
 
 interface DateRangePickerProps {
-  dateRange: DateRange;
-  onDateRangeChange: (range: DateRange) => void;
-  placeholder?: string;
-  className?: string;
-  maxDate?: Date;
+  readonly dateRange: DateRange;
+  readonly onDateRangeChange: (range: DateRange) => void;
+  readonly placeholder?: string;
+  readonly className?: string;
+  readonly maxDate?: Date;
 }
 
 export function DateRangePicker({ 

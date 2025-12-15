@@ -21,7 +21,7 @@ export function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
-  const [error, setError] = useState('');
+  const [error] = useState('');
   const { t } = useTranslation();
   const formValidation = FormValidation()
   type FormValues = {
@@ -29,7 +29,6 @@ export function ForgotPassword() {
   };
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import  { useState, useEffect } from "react";
 import {
     Card,
     CardContent,
@@ -14,14 +14,11 @@ import { Alert, AlertDescription } from "./ui/alert";
 import {
     ArrowLeft,
     Save,
-    Eye,
-    Copy,
     AlertCircle,
     CheckCircle,
     Loader2,
     Mail,
     Code,
-    FileText,
     Shield,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -31,11 +28,11 @@ import {
     ACTIONS,
     PermissionGate,
 } from "./PermissionContext";
-import { replace, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "./TranslationContext";
 import TextEditor from "./common/TextEditor";
 import { useForm } from "react-hook-form";
-import { apiPost, apiPut } from "@/utils/apiFetch";
+import { apiPost } from "@/utils/apiFetch";
 import apiPath from "@/utils/apiPath";
 import { showFormattedDate } from "./common/showFormattedDate";
 import helpers from "@/utils/helpers";
@@ -87,7 +84,6 @@ export function EmailTemplateEditor() {
 
 
     const {
-        register,
         handleSubmit,
         control,
         formState: { errors },
@@ -113,8 +109,8 @@ export function EmailTemplateEditor() {
                 });
 
             } catch (error) {
+                console.warn("Failed to load template");
                 setError("Failed to load template");
-                toast.error("Failed to load template");
             } finally {
                 setLoading(false);
             }
@@ -224,7 +220,7 @@ export function EmailTemplateEditor() {
                         {/* Available Variables */}
                         <div className="space-y-2">
                             <div className="h-6 w-2/3 bg-muted rounded animate-pulse" />
-                            {[...Array(5)].map((_, i) => (
+                            {[...new Array(5)].map((_, i) => (
                                 <div key={i} className="h-10 bg-muted rounded animate-pulse" />
                             ))}
                         </div>
@@ -232,7 +228,7 @@ export function EmailTemplateEditor() {
                         {/* Template Info Card */}
                         <div className="space-y-2 p-4 border rounded bg-background">
                             <div className="h-5 w-1/2 bg-muted rounded animate-pulse" />
-                            {[...Array(4)].map((_, i) => (
+                            {[...new Array(4)].map((_, i) => (
                                 <div key={i} className="h-4 w-full bg-muted rounded animate-pulse" />
                             ))}
                         </div>
@@ -419,12 +415,12 @@ export function EmailTemplateEditor() {
                                                         </code>
 
                                                     </div>
-                                                    <>
+                                                   
                                                         <p className="text-sm text-muted-foreground mb-1">
                                                             {variable.description}
                                                         </p>
 
-                                                    </>
+                                                   
 
                                                 </div>
                                             );

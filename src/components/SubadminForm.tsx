@@ -15,8 +15,8 @@ import { Controller, useForm } from 'react-hook-form';
 import PhoneInput from 'react-phone-input-2';
 import helpers from '@/utils/helpers';
 interface SubadminFormProps {
-  mode: 'add' | 'edit';
-  subadminId?: string;
+ readonly mode: 'add' | 'edit';
+ readonly subadminId?: string;
 }
 
 interface SubadminFormData {

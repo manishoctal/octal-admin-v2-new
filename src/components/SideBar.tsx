@@ -3,33 +3,20 @@ import {
   LayoutDashboard,
   Users,
   Component,
-  Package,
-  Users2,
-  Calendar,
   Target,
-  CreditCard,
-  ShoppingCart,
-  BarChart3,
   Settings,
   LogOut,
-  Bell,
-  Search,
   User,
-  ChevronDown,
   Moon,
   Sun,
   Monitor,
-  Shield,
-  Gift,
   Lock,
-  FileQuestion,
   CircleQuestionMark,
   NotepadText,
   Mails,
   UserRoundCog,
   BellDot,
   FlagOff,
-  BookHeart,
   TableOfContents,
   Waves,
   FileSliders,
@@ -107,33 +94,13 @@ export function SideBar({ children }: DashboardLayoutProps) {
       module: MODULES.SUBADMINS
     },
 
-    // {
-    //   icon: Users2,
-    //   label: t('O_CIRCLES'),
-    //   path: 'circles',
-    //   module: MODULES.CIRCLES
-    // },
-    // {
-    //   icon: Calendar,
-    //   label: t('O_EVENTS'),
-    //   path: 'events',
-    //   module: MODULES.EVENTS
-    // },
-
-
     {
       icon: Target,
       label: t('O_ERROR_LOGS'),
       path: 'error-logs',
       module: MODULES.ERROR_LOGS
     },
-    
-    // {
-    //   icon: BookHeart,
-    //   label: t('SECRET_CRUSH'),
-    //   path: 'secret-crush',
-    //   module: MODULES.SECRET_CRUSH
-    // },
+
     {
       icon: FlagOff,
       label: t('REPORTS'),
@@ -261,9 +228,7 @@ export function SideBar({ children }: DashboardLayoutProps) {
   // Safe check for current route to prevent undefined errors
   const isActiveRoute = (itemPath: string) => {
     if (!currentRoute) return false;
-
     return currentRoute?.includes(itemPath)
-    return currentRoute?.slice(1) === itemPath || currentRoute.startsWith(itemPath + '/');
   };
 
   // Updated navigation to use proper URLs
@@ -403,19 +368,6 @@ export function SideBar({ children }: DashboardLayoutProps) {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  {/* <Button variant="ghost" size="icon" className="relative" 
-                  onClick={()=>{navigate('/notification-manager')}}
-                  >
-                    <Bell className="h-4 w-4" />
-                    <Badge
-                      variant="destructive"
-                      className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
-                    >
-                      3
-                    </Badge>
-                    <span className="sr-only">Notifications</span>
-                  </Button> */}
-
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="relative h-8 w-8 rounded-full">
@@ -494,13 +446,7 @@ export function SideBar({ children }: DashboardLayoutProps) {
             </header>, '')}
 
             <main className="flex-1 overflow-auto bg-gradient-to-br from-primary/5 via-background to-primary/10 dark:from-primary/10 dark:via-background dark:to-primary/20">
-              {/* <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <img
-                  src="/images/logo.svg"
-                  alt="background logo"
-                  className="w-[600px] opacity-[0.03] dark:opacity-[0.05]"
-                />
-              </div> */}
+             
 
               <Outlet />
             </main>

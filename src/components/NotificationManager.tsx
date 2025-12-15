@@ -145,6 +145,7 @@ export function NotificationManager() {
         setNotifications(resp?.data?.results);
       }
     } catch (error) {
+      console.error("Error while loading logs:", error);
       ErrorToastMessage({ message: 'Failed to load notifications' })
     } finally {
       setLoading(false);

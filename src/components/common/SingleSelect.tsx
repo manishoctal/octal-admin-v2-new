@@ -1,13 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search,Check } from "lucide-react";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import { Check } from "lucide-react";
 
 type Option = {
   label: string;
@@ -15,11 +14,11 @@ type Option = {
 };
 
 interface SingleSelectProps {
-  options: Option[];
-  value: string | null;
-  onChange: (value: string | null) => void;
-  placeholder?: string;
-  disabled?: boolean;
+ readonly options: Option[];
+ readonly value: string | null;
+ readonly onChange: (value: string | null) => void;
+ readonly placeholder?: string;
+ readonly disabled?: boolean;
 }
 
 export function SingleSelect({

@@ -12,13 +12,13 @@ import { useSettings } from "../SettingsContext";
 import helpers from "@/utils/helpers";
 
 interface DatePickerProps {
-  value?: Date;
+ readonly value?: Date;
   onChange?: (date: Date | undefined) => void;
-  placeholder?: string;
-  className?: string;
-  minDate?:string;
-  maxDate?:string;
-  disabled?:boolean
+ readonly placeholder?: string;
+ readonly className?: string;
+ readonly minDate?:string;
+ readonly maxDate?:string;
+ readonly disabled?:boolean
 }
 
 export function DatePicker({

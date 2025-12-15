@@ -8,16 +8,15 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { toast } from "sonner";
 import { useSettings } from './contexts/settings';
 import { useTranslation } from './TranslationContext';
-import { usePermissions, PermissionGate, MODULES, ACTIONS, ROLES } from './PermissionContext';
-import { subadminAPI, User as UserType } from './AuthContext';
+import { usePermissions, PermissionGate, MODULES, ACTIONS } from './PermissionContext';
+import { User as UserType } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Pagination } from './common/Pagination';
 import helpers from '@/utils/helpers';
 import NoResultFound from './common/NoResultFound';
-import ConfirmDialog from './common/DeleteConfirm';
 import ConfirmStatusChange from './common/ConfirmStatusChange';
 import SortButton from './common/SortButton';
-import { apiGet, apiPost, apiPut } from '@/utils/apiFetch';
+import { apiGet, apiPut } from '@/utils/apiFetch';
 import apiPath from '@/utils/apiPath';
 import { ErrorToastMessage, SuccessToastMessage } from './common/sonner';
 import { showFormattedDate } from './common/showFormattedDate';
@@ -62,23 +61,20 @@ interface DateRange {
 }
 export function EmailTemplateManager() {
   const navigate = useNavigate();
-  const { formatDate } = useSettings();
   const { t } = useTranslation();
   const { hasPermission } = usePermissions();
   const [subadmins, setSubadmins] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [roleFilter, setRoleFilter] = useState<string>('all');
-  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [searchTerm] = useState('');
+  const [roleFilter] = useState<string>('all');
+  const [statusFilter] = useState<string>('');
   const [sortField, setSortField] = useState<keyof UserType>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
+  const [dateRange] = useState<DateRange>({ from: undefined, to: undefined });
   const [StatusSubadminId, setStatusSubadminId] = useState<string | null>(null);
-  
-  console.log('dateRange', dateRange)
-  // Load subadmins
+    // Load subadmins
   useEffect(() => {
     loadSubadmins();
   }, [sortDirection, sortField, statusFilter, pageSize, dateRange]);

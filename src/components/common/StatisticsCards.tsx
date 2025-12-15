@@ -12,8 +12,8 @@ interface StatisticsData {
 }
 
 interface StatisticsCardsProps {
-  data: StatisticsData;
-  loading?: boolean;
+ readonly data: StatisticsData;
+ readonly loading?: boolean;
 }
 
 export function StatisticsCards({ data, loading }: StatisticsCardsProps) {
